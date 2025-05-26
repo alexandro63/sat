@@ -133,83 +133,19 @@ class PermissionsTableSeeder extends Seeder
                 'administrativo.delete',
             ],
 
-            // — Horas trabajadas docente
-            'horas_docente' => [
-                'horas_docente.view',
-                'horas_docente.generate',
+            // === MODULOS ===
+            'modulos' => [
+                'graduacion_excelencia.index',
+                'proyecto_grado.index',
+                'tesis.index',
+                'trabajo_dirijido.index',
             ],
 
-            // — Cuentas pendientes (alumnos)
-            'cuentas_pendientes' => [
-                'cuentas_pendientes.index',
-                'cuentas_pendientes.view',
-                'cuentas_pendientes.update',
-            ],
-
-            // — Planilla de sueldos
-            'planilla' => [
-                'planilla.view',
-                'planilla.generate',
-            ],
-
-            // — Reporte de marcado
-            'reporte_marcado' => [
-                'reporte_marcado.view',
-                'reporte_marcado.generate',
-            ],
-
-            // — Reporte de pago
-            'reporte_pago' => [
-                'reporte_pago.view',
-                'reporte_pago.generate',
-            ],
-
-            // — Cuentas por curso
-            'cuentas_curso' => [
-                'cuentas_curso.view',
-                'cuentas_curso.update',
-            ],
-
-            // — Horas trabajadas administrativo
-            'horas_administrativo' => [
-                'horas_administrativo.view',
-                'horas_administrativo.generate',
-            ],
-
-            // — Reporte de ingresos generales
-            'reporte_ingresos' => [
-                'reporte_ingresos.view',
-                'reporte_ingresos.delete',
-            ],
-
-            // — Reporte de ingresos por carrera
-            'reporte_ingresos_carreras' => [
-                'reporte_ingresos_carreras.view',
-                'reporte_ingresos_carreras.generate',
-            ],
-
-            // — Reporte de pago alumnos
-            'reporte_pago_alumnos' => [
-                'reporte_pago_alumnos.view',
-                'reporte_pago_alumnos.generate',
-            ],
-
-            // ==== MARCADO ====
-            'registro_marcado' => [
-                'registro_marcado.index',
-                'registro_marcado.view',
-                'registro_marcado.create',
-                'registro_marcado.update',
-                'registro_marcado.delete',
-            ],
-
-            // ==== NOTAS DE ALUMNOS ====
-            'notas_alumnos' => [
-                'notas_alumnos.index',
-                'notas_alumnos.view',
-                'notas_alumnos.create',
-                'notas_alumnos.update',
-            ],
+            //=== REPORTES ===
+            'reportes' => [
+                'avance_estudiante,index',
+                'entregas_avance.index'
+            ]
         ];
 
 

@@ -10,10 +10,12 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Lista de Permisos</h4>
-                            <a class="btn btn-primary btn-round ml-auto" href="{{ route('roles.create') }}">
-                                <i class="fa fa-plus"></i>
-                                Registrar
-                            </a>
+                            @can('permisos.create')
+                                <a class="btn btn-primary btn-round ml-auto" href="{{ route('roles.create') }}">
+                                    <i class="fa fa-plus"></i>
+                                    Registrar
+                                </a>
+                            @endcan
                         </div>
                     </div>
                     <div class="card-body">

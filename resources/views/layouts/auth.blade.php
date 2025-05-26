@@ -21,10 +21,10 @@
                 <div class="login-container">
                     <div class="logo-container">
                         <div class="logo">
-                            SAF
+                            SAT
                         </div>
                         <h2 class="system-title">Sistema</h2>
-                        <p class="system-subtitle">Academico Financiero</p>
+                        <p class="system-subtitle">Académico Titulación</p>
                     </div>
                     @yield('content')
                     @if (Route::has('password.request'))

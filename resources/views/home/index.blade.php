@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Tablero')
 @section('content')
     <div class="panel-header bg-danger-gradient">
         <div class="page-inner py-5">

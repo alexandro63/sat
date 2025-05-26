@@ -35,19 +35,20 @@ return [
 
         [
             'type'     => 'submenu',
+            'title'    => 'Modúlos',
+            'icon'     => 'fas fa-address-book',
+            'children' => 'modules',
+            'isActive' => 'modules.*'
+        ],
+
+        [
+            'type'     => 'submenu',
             'title'    => 'Reportes',
             'icon'     => 'fas fa-folder-open',
             'children' => 'reports',
             'isActive' => 'reports.*'
         ],
 
-        [
-            'type'     => 'submenu',
-            'title'    => 'Modúlos',
-            'icon'     => 'fas fa-address-book',
-            'children' => 'modules',
-            'isActive' => 'modules.*'
-        ],
 
         [
             'type'     => 'submenu',
