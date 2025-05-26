@@ -136,58 +136,14 @@ return [
 
         'reports' => [
 
-            //Reportes de Personal Docente
+            //Reportes de Avance Estudiante
             [
-                'route' => 'teacher_hours.index',
-                'title' => 'Horas trabajadas de docentes',
+                'route' => 'avance_estudiante.index',
+                'title' => 'Avances del Estudiante',
             ],
             [
-                'route' => 'teacher_attendance.index',
-                'title' => 'Marcado de docentes',
-            ],
-            [
-                'route' => 'teacher_payments.index',
-                'title' => 'Pagos a docentes',
-            ],
-
-            //Reportes Administrativos
-            [
-                'route' => 'admin_hours.index',
-                'title' => 'Horas trabajadas del personal administrativo',
-            ],
-            [
-                'route' => 'admin_income.index',
-                'title' => 'Ingresos administrativos',
-            ],
-
-            //Finanzas y Cuentas
-            [
-                'route' => 'general_debts.index',
-                'title' => 'Cuentas pendientes generales',
-            ],
-            [
-                'route' => 'course_debts.index',
-                'title' => 'Cuentas pendientes por curso',
-            ],
-            [
-                'route' => 'payrolls.index',
-                'title' => 'Planillas de pago',
-            ],
-
-            //Reportes de Estudiantes
-            [
-                'route' => 'student_payments.index',
-                'title' => 'Pagos de alumnos',
-            ],
-            [
-                'route' => 'career_income.index',
-                'title' => 'Ingresos por carrera',
-            ],
-
-            //Asignaciones (extra)
-            [
-                'route' => 'group_assignn.index',
-                'title' => 'Asignaciones de grupos',
+                'route' => 'entregas_avance.index',
+                'title' => 'Entregas de Avance',
             ],
 
         ],

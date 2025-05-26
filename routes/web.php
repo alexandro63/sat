@@ -95,26 +95,12 @@ Route::middleware(['atlantis_menu', 'set_session_data', 'check_user_login', 'aut
     Route::resource('registration/enrolled_students', EnrolledStudentController::class);
 
     /** Reports */
-    //Reportes de Personal Docente
-    Route::get('reports/teacher-hours', [ReportController::class, 'teacherHours'])->name('teacher_hours.index');
-    Route::get('reports/teacher-attendance', [ReportController::class, 'teacherAttendance'])->name('teacher_attendance.index');
-    Route::get('reports/teacher-payments', [ReportController::class, 'teacherPayments'])->name('teacher_payments.index');
+    //Reportes de Avance Estudiante
+      Route::prefix('reports')->group(function () {
+        Route::get('avance-estudiante', [ReportController::class, 'avanceEstudiante'])->name('avance_estudiante.index');
+        Route::get('entregas-avance', [ReportController::class, 'entregasAvance'])->name('entregas_avance.index');
+    });
 
-    //Reportes Administrativos
-    Route::get('reports/admin-hours', [ReportController::class, 'adminHours'])->name('admin_hours.index');
-    Route::get('reports/admin-income', [ReportController::class, 'adminIncome'])->name('admin_income.index');
-
-    //Finanzas y Cuentas
-    Route::get('reports/general-debts', [ReportController::class, 'generalDebts'])->name('general_debts.index');
-    Route::get('reports/course-debts', [ReportController::class, 'courseDebts'])->name('course_debts.index');
-    Route::get('reports/payrolls', [ReportController::class, 'payrolls'])->name('payrolls.index');
-
-    //Reportes de Estudiantes
-    Route::get('reports/student-payments', [ReportController::class, 'studentPayments'])->name('student_payments.index');
-    Route::get('reports/career-income', [ReportController::class, 'careerIncome'])->name('career_income.index');
-
-    //Asignaciones
-    Route::get('reports/group-assignments', [ReportController::class, 'groupAssignments'])->name('group_assignn.index');
 
     Route::prefix('modules')->group(function () {
         Route::get('tesis', [ModuleController::class, 'tesis'])->name('tesis.index');

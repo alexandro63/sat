@@ -1,34 +1,43 @@
 @extends('layouts.app')
-@section('title', 'Reportes')
+@section('title', 'Avance Estudiante')
 @section('content')
     <div class="page-inner">
-        <x-breadcrumb title="Marcados Docente" />
+        <x-breadcrumb title="Avance Estudiante" />
 
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Marcados Docente</h4>
+                            <h4 class="card-title">Avances del Estudiante</h4>
+                            <button class="btn btn-primary btn-round ml-auto btn-modal"
+                                data-href="{{ route('people.create') }}" data-container=".modal_person">
+                                <i class="fa fa-plus"></i>
+                                Registrar
+                            </button>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="degrees_table" class="display table table-striped table-hover">
+                            <table id="people_table" class="display table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Estamos en desarrollo....</th>
+
                                     </tr>
                                 </thead>
                             </table>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade modal_person" tabindex="-1" role="dialog" aria-hidden="true">
+    </div>
 @endsection
 
 @push('scripts')
-    {{-- <script src="{{ asset('js/app/degrees.js') }}"></script> --}}
+    <script src="{{ asset('js/app/people.js') }}"></script>
 @endpush

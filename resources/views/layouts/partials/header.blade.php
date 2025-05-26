@@ -98,14 +98,14 @@
                                         </div>
                                     </a>
                                     <a class="col-6 col-md-4 p-0"
-                                        href="{{ route('teacher_hours.index') }}">
+                                        href="{{ route('avance_estudiante.index') }}">
                                         <div class="quick-actions-item">
                                             <i class="flaticon-clock-1"></i>
                                             <span class="text">Marcado Docente</span>
                                         </div>
                                     </a>
                                     <a class="col-6 col-md-4 p-0"
-                                        href="{{ route('admin_hours.index') }}">
+                                        href="{{ route('entregas_avance.index') }}">
                                         <div class="quick-actions-item">
                                             <i class="flaticon-clock-1"></i>
                                             <span class="text">Marcado Administrativo</span>
