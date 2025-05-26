@@ -10,12 +10,14 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Lista de Alumnos Inscritos</h4>
-                            <button class="btn btn-primary btn-round ml-auto btn-modal"
-                                data-href="{{ route('student_enrollments.create') }}"
-                                data-container=".modal_student_enrollment">
-                                <i class="fa fa-plus"></i>
-                                Registrar
-                            </button>
+                            @can('alumno_inscripcion.create')
+                                <button class="btn btn-primary btn-round ml-auto btn-modal"
+                                    data-href="{{ route('student_enrollments.create') }}"
+                                    data-container=".modal_student_enrollment">
+                                    <i class="fa fa-plus"></i>
+                                    Registrar
+                                </button>
+                            @endcan
                         </div>
                     </div>
                     <div class="card-body">

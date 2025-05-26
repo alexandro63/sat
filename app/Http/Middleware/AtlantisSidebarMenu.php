@@ -20,6 +20,10 @@ class AtlantisSidebarMenu
         $items = [];
 
         foreach ($config as $item) {
+            if (!$this->hasPermission($item)) {
+                continue;
+            }
+
             switch ($item['type']) {
                 case 'header':
                     $items[] = $item;
@@ -40,6 +44,10 @@ class AtlantisSidebarMenu
 
                     if (isset($item['children'], $childrenConfig[$item['children']])) {
                         foreach ($childrenConfig[$item['children']] as $child) {
+                            if (!$this->hasPermission($child)) {
+                                continue;
+                            }
+
                             $children[] = [
                                 'title' => $child['title'],
                                 'url' => route($child['route']),
@@ -48,13 +56,15 @@ class AtlantisSidebarMenu
                         }
                     }
 
-                    $items[] = [
-                        'type' => 'submenu',
-                        'title' => $item['title'],
-                        'icon' => $item['icon'] ?? '',
-                        'isActive' => request()->routeIs($item['isActive']),
-                        'children' => $children,
-                    ];
+                    if (!empty($children)) {
+                        $items[] = [
+                            'type' => 'submenu',
+                            'title' => $item['title'],
+                            'icon' => $item['icon'] ?? '',
+                            'isActive' => request()->routeIs($item['isActive']),
+                            'children' => $children,
+                        ];
+                    }
                     break;
             }
         }
@@ -64,5 +74,28 @@ class AtlantisSidebarMenu
         view()->share('atlantisSidebarMenu', $sidebarHtml);
 
         return $next($request);
+    }
+
+    private function hasPermission($item)
+    {
+        if (!isset($item['permission'])) {
+            return true;
+        }
+
+        if (!auth()->check()) {
+            return false;
+        }
+
+        $permission = $item['permission'];
+
+        if (is_array($permission)) {
+            foreach ($permission as $perm) {
+                if (auth()->user()->can($perm)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return auth()->user()->can($permission);
     }
 }

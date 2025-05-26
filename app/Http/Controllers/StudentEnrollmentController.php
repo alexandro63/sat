@@ -14,6 +14,9 @@ class StudentEnrollmentController extends Controller
      */
     public function index()
     {
+        if (! auth()->user()->can('alumno_inscripcion.index')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $student_enrollments = StudentEnrollment::select(['alu_id', 'alu_per_id', 'alu_car_id', 'alu_turno', 'alu_curso', 'alu_estado', 'alu_con_car'])->orderBy('alu_id', 'desc');
 
@@ -23,21 +26,28 @@ class StudentEnrollmentController extends Controller
                     $showUrl = route('student_enrollments.show', $row->alu_id);
                     $deleteUrl = route('student_enrollments.destroy', $row->alu_id);
 
+                    $canEdit = auth()->user()->can('alumno_inscripcion.update');
+                    $canView = auth()->user()->can('alumno_inscripcion.view');
+                    $canDelete = auth()->user()->can('alumno_inscripcion.delete');
+                    $editDisabled = $canEdit ? '' : 'disabled';
+                    $viewDisabled = $canView ? '' : 'disabled';
+                    $deleteDisabled = $canDelete ? '' : 'disabled';
+
                     $buttons = '
-                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_student_enrollment" title="Editar">
+                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_student_enrollment" ' . $editDisabled . ' title="Editar">
                         <i class="icon-pencil"></i>
                     </button>
                     &nbsp;';
 
                     $buttons .= '
-                    <button data-href="' . $showUrl . '" class="btn btn-icon btn-sm btn-round btn-secondary btn-modal" title="Asignación de materia"
+                    <button data-href="' . $showUrl . '" class="btn btn-icon btn-sm btn-round btn-secondary btn-modal" ' . $viewDisabled . ' title="Asignación de materia"
                     data-container=".modal_student_enrollment">
                         <i class="far fa-folder"></i>
                     </button>
                     &nbsp;';
 
                     $buttons .= '
-                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_student_enrollment" title="Eliminar">
+                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_student_enrollment" ' . $deleteDisabled . 'title="Eliminar">
                         <i class="icon-trash"></i>
                     </button>';
 
@@ -77,6 +87,9 @@ class StudentEnrollmentController extends Controller
      */
     public function create()
     {
+        if (! auth()->user()->can('alumno_inscripcion.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         $shifts = StudentEnrollment::shifts();
         $courses = StudentEnrollment::courses();
         return view('alumno_inscripcion.create', compact('shifts', 'courses'));
@@ -87,6 +100,9 @@ class StudentEnrollmentController extends Controller
      */
     public function store(Request $request)
     {
+        if (! auth()->user()->can('alumno_inscripcion.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         try {
             $con_car = $request->has('alu_con_car') ? 1 : 0;
             $estado = $request->has('alu_estado') ? 1 : 0;
@@ -120,6 +136,9 @@ class StudentEnrollmentController extends Controller
      */
     public function show(string $id)
     {
+        if (! auth()->user()->can('alumno_inscripcion.view')) {
+            abort(403, 'Unauthorized action.');
+        }
         return view('alumno_inscripcion.show');
     }
 
@@ -128,6 +147,9 @@ class StudentEnrollmentController extends Controller
      */
     public function edit(string $id)
     {
+        if (! auth()->user()->can('alumno_inscripcion.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $student_enrollment = StudentEnrollment::find($id);
             $shifts = StudentEnrollment::shifts();
@@ -141,9 +163,9 @@ class StudentEnrollmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // if (! auth()->user()->can('user.update')) {
-        //     abort(403, 'Unauthorized action.');
-        // }
+        if (! auth()->user()->can('alumno_inscripcion.update')) {
+            abort(403, 'Unauthorized action.');
+        }
 
         if (request()->ajax()) {
             try {
@@ -190,6 +212,9 @@ class StudentEnrollmentController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! auth()->user()->can('alumno_inscripcion.delete')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $student_enrollment = StudentEnrollment::findOrFail($id);

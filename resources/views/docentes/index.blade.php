@@ -10,11 +10,13 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Lista de Docentes</h4>
-                            <button class="btn btn-primary btn-round ml-auto btn-modal"
-                                data-href="{{ route('teachers.create') }}" data-container=".modal_teacher">
-                                <i class="fa fa-plus"></i>
-                                Registrar
-                            </button>
+                            @can('docente.create')
+                                <button class="btn btn-primary btn-round ml-auto btn-modal"
+                                    data-href="{{ route('teachers.create') }}" data-container=".modal_teacher">
+                                    <i class="fa fa-plus"></i>
+                                    Registrar
+                                </button>
+                            @endcan
                         </div>
                     </div>
                     <div class="card-body">

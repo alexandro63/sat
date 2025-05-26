@@ -14,6 +14,9 @@ class AcademicPlanningController extends Controller
      */
     public function index()
     {
+        if (! auth()->user()->can('plan_academico.index')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $academic_planning = AcademicPlanning::with([
                 'subject:mat_id,mat_nombre',
@@ -26,14 +29,19 @@ class AcademicPlanningController extends Controller
                     $editUrl = route('academic_planning.edit', $row->plan_id);
                     $deleteUrl = route('academic_planning.destroy', $row->plan_id);
 
+                    $canEdit = auth()->user()->can('plan_academico.update');
+                    $canDelete = auth()->user()->can('plan_academico.delete');
+                    $editDisabled = $canEdit ? '' : 'disabled';
+                    $deleteDisabled = $canDelete ? '' : 'disabled';
+
                     $buttons = '
-                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_academic_planning" title="Editar">
+                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_academic_planning" ' . $editDisabled . 'title="Editar">
                         <i class="icon-pencil"></i>
                     </button>
                     &nbsp;';
 
                     $buttons .= '
-                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_academic_planning" title="Eliminar">
+                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_academic_planning" ' . $deleteDisabled . 'title="Eliminar">
                         <i class="icon-trash"></i>
                     </button>';
 
@@ -61,6 +69,9 @@ class AcademicPlanningController extends Controller
      */
     public function create()
     {
+        if (! auth()->user()->can('plan_academico.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         return view('planificacion_academica.create');
     }
 
@@ -69,6 +80,9 @@ class AcademicPlanningController extends Controller
      */
     public function store(Request $request)
     {
+        if (! auth()->user()->can('plan_academico.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         try {
             $input = $request->only(['plan_mat_id', 'plan_doc_id', 'plan_amb_id', 'plan_fec_ini', 'plan_fec_fin', 'plan_hor_ini', 'plan_horario']);
             $academic_planning  = AcademicPlanning::create($input);
@@ -97,7 +111,9 @@ class AcademicPlanningController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if (! auth()->user()->can('plan_academico.view')) {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -105,6 +121,9 @@ class AcademicPlanningController extends Controller
      */
     public function edit(string $id)
     {
+        if (! auth()->user()->can('plan_academico.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $academic_planning = AcademicPlanning::find($id);
             $schedules = json_decode($academic_planning->plan_horario, true);
@@ -117,6 +136,9 @@ class AcademicPlanningController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (! auth()->user()->can('plan_academico.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $input = $request->only(['plan_mat_id', 'plan_doc_id', 'plan_amb_id', 'plan_fec_ini', 'plan_fec_fin', 'plan_hor_ini', 'plan_horario']);
@@ -158,6 +180,9 @@ class AcademicPlanningController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! auth()->user()->can('plan_academico.delete')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $academic_planning = AcademicPlanning::findOrFail($id);

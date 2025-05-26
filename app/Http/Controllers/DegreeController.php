@@ -14,6 +14,9 @@ class DegreeController extends Controller
      */
     public function index()
     {
+        if (! auth()->user()->can('carrera.index')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $degrees = Degree::select(['car_id', 'car_nombre', 'car_descripcion', 'car_duracion'])->orderBy('car_id', 'desc');
 
@@ -22,14 +25,21 @@ class DegreeController extends Controller
                     $editUrl = route('degrees.edit', $row->car_id);
                     $deleteUrl = route('degrees.destroy', $row->car_id);
 
+                    $canEdit = auth()->user()->can('carrera.update');
+                    $canDelete = auth()->user()->can('carrera.delete');
+                    $editDisabled = $canEdit ? '' : 'disabled';
+                    $deleteDisabled = $canDelete ? '' : 'disabled';
+
                     $buttons = '
-                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-round btn-primary edit_degree">
+                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_degree"
+                    ' . $editDisabled . ' title="Editar">
                         <i class="icon-pencil"></i>
                     </button>
                     &nbsp;';
 
                     $buttons .= '
-                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-round btn-danger delete_degree">
+                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_degree"
+                    ' . $deleteDisabled . ' title="Eliminar">
                         <i class="icon-trash"></i>
                     </button>';
 
@@ -49,6 +59,9 @@ class DegreeController extends Controller
      */
     public function create()
     {
+        if (! auth()->user()->can('carrera.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         return view('carreras.create');
     }
 
@@ -57,6 +70,9 @@ class DegreeController extends Controller
      */
     public function store(Request $request)
     {
+        if (! auth()->user()->can('carrera.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         try {
             $input = $request->only(['car_nombre', 'car_descripcion', 'car_duracion']);
             $degree  = Degree::create($input);
@@ -94,6 +110,9 @@ class DegreeController extends Controller
      */
     public function edit($id)
     {
+        if (! auth()->user()->can('carrera.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $degree = Degree::find($id);
             return view('carreras/edit', compact('degree'));
@@ -105,10 +124,9 @@ class DegreeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // if (! auth()->user()->can('user.update')) {
-        //     abort(403, 'Unauthorized action.');
-        // }
-
+        if (! auth()->user()->can('carrera.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $input = $request->only(['car_nombre', 'car_descripcion', 'car_duracion']);
@@ -146,6 +164,9 @@ class DegreeController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! auth()->user()->can('carrera.delete')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $degree = Degree::findOrFail($id);

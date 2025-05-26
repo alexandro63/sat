@@ -15,28 +15,34 @@ class PeopleController extends Controller
      */
     public function index()
     {
+        if (! auth()->user()->can('persona.index')) {
+            abort(403, 'Unauthorized action.');
+        }
+
         if (request()->ajax()) {
             $people = People::select(['per_id', 'per_nombres', 'per_apellidopat', 'per_apellidomat', 'per_ci', 'per_estado'])->orderBy('per_id', 'desc');
 
             return DataTables::of($people)
                 ->addColumn('action', function ($people) {
                     $user_auth = Auth::user()->per_id;
-                    $canDelete = $people->per_id !== $user_auth;
                     $editUrl = route('people.edit', $people->per_id);
                     $deleteUrl = route('people.destroy', $people->per_id);
-
+                    $canEdit = auth()->user()->can('permiso.update');
+                    $canDelete = auth()->user()->can('permiso.delete') && $people->per_id !== $user_auth;
+                    $editDisabled = $canEdit ? '' : 'disabled';
+                    $deleteDisabled = $canDelete ? '' : 'disabled';
                     $buttons = '
-                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-round btn-primary edit_person">
+                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_person"
+                    ' . $editDisabled . ' title="Editar">
                         <i class="icon-pencil"></i>
                     </button>
                     &nbsp;';
 
-                    if ($canDelete) {
-                        $buttons .= '
-                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-round btn-danger delete_person">
+                    $buttons .= '
+                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_person"
+                    ' . $deleteDisabled . ' title="Eliminar">
                         <i class="icon-trash"></i>
                     </button>';
-                    }
 
                     return $buttons;
                 })
@@ -55,6 +61,9 @@ class PeopleController extends Controller
      */
     public function create()
     {
+        if (! auth()->user()->can('persona.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         return view('personas.create');
     }
 
@@ -63,6 +72,9 @@ class PeopleController extends Controller
      */
     public function store(Request $request)
     {
+        if (! auth()->user()->can('persona.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         $status = $request->has('per_estado') ? 1 : 0;
         try {
             $input = $request->only(['per_nombres', 'per_apellidopat', 'per_apellidomat', 'per_ci', 'per_direccion', 'per_telefono', 'per_celular', 'per_estado']);
@@ -95,7 +107,9 @@ class PeopleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if (! auth()->user()->can('persona.view')) {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -103,6 +117,9 @@ class PeopleController extends Controller
      */
     public function edit(string $id)
     {
+        if (! auth()->user()->can('persona.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $person = People::find($id);
             return view('personas/edit', compact('person'));
@@ -114,6 +131,9 @@ class PeopleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (! auth()->user()->can('persona.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $input = $request->only(['per_nombres', 'per_apellidopat', 'per_apellidomat', 'per_ci', 'per_direccion', 'per_telefono', 'per_celular']);
@@ -155,6 +175,9 @@ class PeopleController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! auth()->user()->can('persona.delete')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $person = People::findOrFail($id);

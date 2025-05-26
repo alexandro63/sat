@@ -58,11 +58,6 @@ class PermissionsTableSeeder extends Seeder
                 'ag_grupo_usuario.delete',
             ],
 
-            // ==== REGISTRO ====
-            'registros' => [
-                'registro.view',
-            ],
-
             // ==== AMBIENTES ====
             'ambientes' => [
                 'ambiente.index',
@@ -88,6 +83,15 @@ class PermissionsTableSeeder extends Seeder
                 'materia.delete',
             ],
 
+            // ==== ADMINISTRATIVO ====
+            'administrativo' => [
+                'administrativo.index',
+                'administrativo.view',
+                'administrativo.create',
+                'administrativo.update',
+                'administrativo.delete',
+            ],
+
             // ==== DOCENTES ====
             'docentes' => [
                 'docente.index',
@@ -99,20 +103,20 @@ class PermissionsTableSeeder extends Seeder
 
             // ==== PLANIFICACIÓN ACADÉMICA ====
             'planificacion_academica' => [
-                'plan_academica.index',
-                'plan_academica.view',
-                'plan_academica.create',
-                'plan_academica.update',
-                'plan_academica.delete',
+                'plan_academico.index',
+                'plan_academico.view',
+                'plan_academico.create',
+                'plan_academico.update',
+                'plan_academico.delete',
             ],
 
             // ==== ALUMNOS – INSCRIPCIONES ====
             'alumno_inscripcion' => [
-                'alumno.inscripcion.index',
-                'alumno.inscripcion.view',
-                'alumno.inscripcion.create',
-                'alumno.inscripcion.update',
-                'alumno.inscripcion.delete',
+                'alumno_inscripcion.index',
+                'alumno_inscripcion.view',
+                'alumno_inscripcion.create',
+                'alumno_inscripcion.update',
+                'alumno_inscripcion.delete',
             ],
 
             // ==== OTROS INGRESOS ====
@@ -124,27 +128,39 @@ class PermissionsTableSeeder extends Seeder
                 'otros_ingresos.delete',
             ],
 
-            // ==== ADMINISTRATIVO ====
-            'administrativo' => [
-                'administrativo.index',
-                'administrativo.view',
-                'administrativo.create',
-                'administrativo.update',
-                'administrativo.delete',
+            // ==== AJUSTE DOCENTE ====
+            'ajuste_docentes' => [
+                'ajuste_docente.index',
+                'ajuste_docente.view',
+                'ajuste_docente.create',
+                'ajuste_docente.update',
+                'ajuste_docente.delete',
             ],
+
 
             // === MODULOS ===
             'modulos' => [
+                'tesis.index',
                 'graduacion_excelencia.index',
                 'proyecto_grado.index',
-                'tesis.index',
                 'trabajo_dirijido.index',
             ],
 
             //=== REPORTES ===
             'reportes' => [
-                'avance_estudiante,index',
+                'avance_estudiante.index',
                 'entregas_avance.index'
+            ],
+
+            //=== ASISTENCIAS ===
+            'asistencias' => [
+                'asistencias.docente',
+                'asistencias.modificador'
+            ],
+
+            //=== CONFIGURACIÓN ===
+            'configuraciones' => [
+                'configuracion.index',
             ]
         ];
 

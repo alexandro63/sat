@@ -15,6 +15,9 @@ class AdministrativeController extends Controller
      */
     public function index()
     {
+        if (! auth()->user()->can('administrativo.index')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $administrative = Administrative::with('people')
                 ->select(['adm_id', 'adm_per_id', 'adm_cargo', 'adm_estado', 'adm_fec_ini', 'adm_fec_fin'])
@@ -25,14 +28,21 @@ class AdministrativeController extends Controller
                     $editUrl = route('administrative.edit', $row->adm_id);
                     $deleteUrl = route('administrative.destroy', $row->adm_id);
 
+                    $canEdit = auth()->user()->can('administrativo.update');
+                    $canDelete = auth()->user()->can('administrativo.delete');
+                    $editDisabled = $canEdit ? '' : 'disabled';
+                    $deleteDisabled = $canDelete ? '' : 'disabled';
+
                     $buttons = '
-                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-round btn-primary edit_administrative">
+                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_administrative"
+                    ' . $editDisabled . ' title="Editar">
                         <i class="icon-pencil"></i>
                     </button>
                     &nbsp;';
 
                     $buttons .= '
-                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-round btn-danger delete_administrative">
+                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_administrative"
+                    ' . $deleteDisabled . ' title="Editar">
                         <i class="icon-trash"></i>
                     </button>';
 
@@ -60,6 +70,9 @@ class AdministrativeController extends Controller
      */
     public function create()
     {
+        if (! auth()->user()->can('administrativo.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         $grade_academic = UtilHelper::getGradeAcademic();
         return view('administrativo.create', compact('grade_academic'));
     }
@@ -69,6 +82,9 @@ class AdministrativeController extends Controller
      */
     public function store(Request $request)
     {
+        if (! auth()->user()->can('administrativo.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         try {
             $input = $request->only(['adm_per_id', 'adm_grado_academico', 'adm_fec_ing', 'adm_cargo', 'adm_pago', 'adm_obs', 'adm_fec_ini', 'adm_fec_fin', 'adm_plan_horario']);
             $input['adm_estado'] = $request->has('adm_estado') ? 1 : 0;
@@ -106,6 +122,9 @@ class AdministrativeController extends Controller
      */
     public function edit(string $id)
     {
+        if (! auth()->user()->can('administrativo.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $administrative = Administrative::find($id);
             $schedules = json_decode($administrative->adm_plan_horario, true);
@@ -119,6 +138,9 @@ class AdministrativeController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (! auth()->user()->can('administrativo.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $input = $request->only(['adm_per_id', 'adm_grado_academico', 'adm_fec_ing', 'adm_cargo', 'adm_pago', 'adm_obs', 'adm_fec_ini', 'adm_fec_fin', 'adm_plan_horario']);
@@ -163,6 +185,9 @@ class AdministrativeController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! auth()->user()->can('administrativo.delete')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $administrative = Administrative::findOrFail($id);

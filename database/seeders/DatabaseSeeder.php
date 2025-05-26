@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\People;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,13 +23,21 @@ class DatabaseSeeder extends Seeder
             'per_ci' => '12345678'
         ]);
 
-        User::factory()->create([
+        $user = User::factory()->create([
             'user_name' => 'Admin',
             'per_id' => $people->per_id,
             'status' => 1,
             'email' => 'admin@gmail.com',
             'password' => bcrypt('123456'),
         ]);
+
+        $role = Role::create([
+            'name' => 'Admin',
+            'guard_name' => 'web',
+            'start_path' => 'home',
+            'is_default' => 1,
+        ]);
+        $user->assignRole($role->name);
 
         // $batchSize = 1000;
         // $total = 1000;

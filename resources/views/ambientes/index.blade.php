@@ -10,11 +10,13 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Lista de Ambientes</h4>
-                            <button class="btn btn-primary btn-round ml-auto btn-modal"
-                                data-href="{{ route('classrooms.create') }}" data-container=".modal_classroom">
-                                <i class="fa fa-plus"></i>
-                                Registrar
-                            </button>
+                            @can('ambiente.create')
+                                <button class="btn btn-primary btn-round ml-auto btn-modal"
+                                    data-href="{{ route('classrooms.create') }}" data-container=".modal_classroom">
+                                    <i class="fa fa-plus"></i>
+                                    Registrar
+                                </button>
+                            @endcan
                         </div>
                     </div>
                     <div class="card-body">

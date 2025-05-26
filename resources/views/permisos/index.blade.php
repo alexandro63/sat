@@ -10,16 +10,12 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Lista de Permisos</h4>
-                            @can('permisos.create')
+                            @can('permiso.create')
                                 <a class="btn btn-primary btn-round ml-auto" href="{{ route('roles.create') }}">
                                     <i class="fa fa-plus"></i>
                                     Registrar
                                 </a>
                             @endcan
-                               <a class="btn btn-primary btn-round ml-auto" href="{{ route('roles.create') }}">
-                                    <i class="fa fa-plus"></i>
-                                    Registrar
-                                </a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -42,4 +38,10 @@
 
 @push('scripts')
     <script src="{{ asset('js/app/roles.js') }}"></script>
+    <script>
+        window.userPermissions = {
+            canDelete: {{ auth()->user()->can('permiso.delete') ? 'true' : 'false' }},
+            canUpdate: {{ auth()->user()->can('permiso.update') ? 'true' : 'false' }}
+        };
+    </script>
 @endpush

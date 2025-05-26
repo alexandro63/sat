@@ -10,11 +10,13 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Lista de Carreras</h4>
-                            <button class="btn btn-primary btn-round ml-auto btn-modal"
-                                data-href="{{ route('degrees.create') }}" data-container=".modal_degree">
-                                <i class="fa fa-plus"></i>
-                                Registrar
-                            </button>
+                            @can('carrera.create')
+                                <button class="btn btn-primary btn-round ml-auto btn-modal"
+                                    data-href="{{ route('degrees.create') }}" data-container=".modal_degree">
+                                    <i class="fa fa-plus"></i>
+                                    Registrar
+                                </button>
+                            @endcan
                         </div>
                     </div>
                     <div class="card-body">

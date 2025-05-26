@@ -27,28 +27,35 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (! auth()->user()->can('usuario.index')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $users = User::with('people')->select(['id', 'user_name', 'per_id', 'status'])->orderBy('id', 'desc');
 
             return DataTables::of($users)
                 ->addColumn('action', function ($user) {
                     $user_auth = Auth::user()->id;
-                    $canDelete = $user->id !== $user_auth;
                     $editUrl = route('users.edit', $user->id);
                     $deleteUrl = route('users.destroy', $user->id);
 
+                    $canEdit = auth()->user()->can('usuario.update');
+                    $canDelete = auth()->user()->can('usuario.delete') && $user->id !== $user_auth;
+                    $editDisabled = $canEdit ? '' : 'disabled';
+                    $deleteDisabled = $canDelete ? '' : 'disabled';
+
                     $buttons = '
-                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-round btn-primary edit_user">
+                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_user"
+                    ' . $editDisabled . ' title="Editar">
                         <i class="icon-pencil"></i>
                     </button>
                     &nbsp;';
 
-                    if ($canDelete) {
-                        $buttons .= '
-                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-round btn-danger delete_user">
+                    $buttons .= '
+                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_user"
+                    ' . $deleteDisabled . ' title="Eliminar">
                         <i class="icon-trash"></i>
                     </button>';
-                    }
 
                     return $buttons;
                 })
@@ -75,6 +82,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (! auth()->user()->can('usuario.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         $roles = $this->util->getRoleData();
         return view('usuarios.create', compact('roles'));
     }
@@ -84,6 +94,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        if (! auth()->user()->can('usuario.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         try {
             $status = $request->has('status') ? 1 : 0;
             $input = $request->only(['per_id', 'user_name', 'password']);
@@ -118,7 +131,9 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if (! auth()->user()->can('usuario.view')) {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -126,6 +141,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        if (! auth()->user()->can('usuario.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $user = User::find($id);
             $roles = $this->util->getRoleData();
@@ -138,9 +156,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // if (! auth()->user()->can('user.update')) {
-        //     abort(403, 'Unauthorized action.');
-        // }
+        if (! auth()->user()->can('usuario.update')) {
+            abort(403, 'Unauthorized action.');
+        }
 
         if (request()->ajax()) {
             try {
@@ -201,6 +219,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! auth()->user()->can('usuario.delete')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $user = User::findOrFail($id);

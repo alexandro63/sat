@@ -17,6 +17,9 @@ class OtherIncomeController extends Controller
      */
     public function index()
     {
+        if (! auth()->user()->can('otros_ingresos.index')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $other_incomes  = OtherIncome::with([
                 'student.people:per_id,per_ci,per_nombres,per_apellidopat,per_apellidomat',
@@ -28,14 +31,19 @@ class OtherIncomeController extends Controller
                     $editUrl = route('other_income.edit', $row->pag_id);
                     $deleteUrl = route('other_income.destroy', $row->pag_id);
 
+                    $canEdit = auth()->user()->can('otros_ingresos.update');
+                    $canDelete = auth()->user()->can('otros_ingresos.delete');
+                    $editDisabled = $canEdit ? '' : 'disabled';
+                    $deleteDisabled = $canDelete ? '' : 'disabled';
+
                     $buttons = '
-                    <button data-href="' . e($editUrl) . '" class="btn btn-icon btn-sm btn-round btn-primary edit_other_income" title="Editar">
+                    <button data-href="' . e($editUrl) . '" class="btn btn-icon btn-sm btn-round btn-primary edit_other_income" ' . $editDisabled . ' title="Editar">
                         <i class="icon-pencil"></i>
                     </button>
                     &nbsp;';
 
                     $buttons .= '
-                    <button data-href="' . e($deleteUrl) . '" class="btn btn-icon btn-sm btn-round btn-danger delete_other_income" title="Eliminar">
+                    <button data-href="' . e($deleteUrl) . '" class="btn btn-icon btn-sm btn-round btn-danger delete_other_income" ' . $deleteDisabled . ' title="Eliminar">
                         <i class="icon-trash"></i>
                     </button>';
 
@@ -66,6 +74,9 @@ class OtherIncomeController extends Controller
      */
     public function create()
     {
+        if (! auth()->user()->can('otros_ingresos.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         $type_payments = UtilHelper::getTypePayments();
         return view('otros_ingresos.create', compact('type_payments'));
     }
@@ -75,6 +86,9 @@ class OtherIncomeController extends Controller
      */
     public function store(Request $request)
     {
+        if (! auth()->user()->can('otros_ingresos.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         try {
             $input = $request->only(['pag_alu_id', 'pag_fec_hor', 'pag_monto', 'pag_cuota', 'pag_rof', 'pag_obs', 'pag_tipo']);
             $input['pag_usu_id'] = Session::get('user.user_id', Auth::id());
@@ -106,7 +120,9 @@ class OtherIncomeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if (! auth()->user()->can('otros_ingresos.view')) {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -114,6 +130,9 @@ class OtherIncomeController extends Controller
      */
     public function edit(string $id)
     {
+        if (! auth()->user()->can('otros_ingresos.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $other_income = OtherIncome::find($id);
             $type_payments = UtilHelper::getTypePayments();
@@ -126,9 +145,9 @@ class OtherIncomeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // if (! auth()->user()->can('user.update')) {
-        //     abort(403, 'Unauthorized action.');
-        // }
+        if (! auth()->user()->can('otros_ingresos.update')) {
+            abort(403, 'Unauthorized action.');
+        }
 
         if (request()->ajax()) {
             try {
@@ -171,6 +190,9 @@ class OtherIncomeController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! auth()->user()->can('otros_ingresos.delete')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $other_income = OtherIncome::findOrFail($id);

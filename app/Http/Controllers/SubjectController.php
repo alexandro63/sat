@@ -14,6 +14,9 @@ class SubjectController extends Controller
      */
     public function index()
     {
+        if (! auth()->user()->can('materia.index')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $subjects = Subject::with('degree')->select(['mat_id', 'mat_car_id', 'mat_nombre', 'mat_descripcion'])->orderBy('mat_id', 'desc');
 
@@ -22,14 +25,22 @@ class SubjectController extends Controller
                     $editUrl = route('subjects.edit', $row->mat_id);
                     $deleteUrl = route('subjects.destroy', $row->mat_id);
 
+
+                    $canEdit = auth()->user()->can('materia.update');
+                    $canDelete = auth()->user()->can('materia.delete');
+                    $editDisabled = $canEdit ? '' : 'disabled';
+                    $deleteDisabled = $canDelete ? '' : 'disabled';
+
                     $buttons = '
-                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-round btn-primary edit_subject">
+                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_subject"
+                    ' . $editDisabled . ' title="Editar">
                         <i class="icon-pencil"></i>
                     </button>
                     &nbsp;';
 
                     $buttons .= '
-                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-round btn-danger delete_subject">
+                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_subject"
+                    ' . $deleteDisabled . ' title="Eliminar">
                         <i class="icon-trash"></i>
                     </button>';
 
@@ -51,6 +62,9 @@ class SubjectController extends Controller
      */
     public function create()
     {
+        if (! auth()->user()->can('materia.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         return view('materias.create');
     }
 
@@ -59,6 +73,9 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
+        if (! auth()->user()->can('materia.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         try {
             $input = $request->only(['mat_car_id', 'mat_nombre', 'mat_descripcion']);
             $subject  = Subject::create($input);
@@ -97,6 +114,9 @@ class SubjectController extends Controller
      */
     public function edit($id)
     {
+        if (! auth()->user()->can('materia.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $subject = Subject::find($id);
             return view('materias/edit', compact('subject'));
@@ -108,9 +128,9 @@ class SubjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // if (! auth()->user()->can('user.update')) {
-        //     abort(403, 'Unauthorized action.');
-        // }
+        if (! auth()->user()->can('materia.update')) {
+            abort(403, 'Unauthorized action.');
+        }
 
         if (request()->ajax()) {
             try {
@@ -149,6 +169,9 @@ class SubjectController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! auth()->user()->can('materia.delete')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $subject = Subject::findOrFail($id);

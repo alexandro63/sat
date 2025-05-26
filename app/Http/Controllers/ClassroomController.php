@@ -15,6 +15,9 @@ class ClassroomController extends Controller
      */
     public function index()
     {
+        if (! auth()->user()->can('ambiente.index')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $classrooms = Classroom::select(['amb_id', 'amb_nombre', 'amb_capacidad', 'amb_piso', 'amb_descripcion'])->orderBy('amb_id', 'desc');
 
@@ -23,14 +26,21 @@ class ClassroomController extends Controller
                     $editUrl = route('classrooms.edit', $row->amb_id);
                     $deleteUrl = route('classrooms.destroy', $row->amb_id);
 
+                    $canEdit = auth()->user()->can('ambiente.update');
+                    $canDelete = auth()->user()->can('ambiente.delete');
+                    $editDisabled = $canEdit ? '' : 'disabled';
+                    $deleteDisabled = $canDelete ? '' : 'disabled';
+
                     $buttons = '
-                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-round btn-primary edit_classroom">
+                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_classroom"
+                    ' . $editDisabled . ' title="Editar">
                         <i class="icon-pencil"></i>
                     </button>
                     &nbsp;';
 
                     $buttons .= '
-                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-round btn-danger delete_classroom">
+                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_classroom"
+                    ' . $deleteDisabled . ' title="Eliminar">
                         <i class="icon-trash"></i>
                     </button>';
 
@@ -56,6 +66,9 @@ class ClassroomController extends Controller
      */
     public function create()
     {
+        if (! auth()->user()->can('ambiente.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         return view('ambientes.create');
     }
 
@@ -64,6 +77,9 @@ class ClassroomController extends Controller
      */
     public function store(Request $request)
     {
+        if (! auth()->user()->can('ambiente.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         try {
             $input = $request->only(['amb_nombre', 'amb_capacidad', 'amb_piso', 'amb_descripcion']);
             $classroom  = Classroom::create($input);
@@ -102,6 +118,9 @@ class ClassroomController extends Controller
      */
     public function edit($id)
     {
+        if (! auth()->user()->can('ambiente.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $classroom = Classroom::find($id);
             return view('ambientes.edit', compact('classroom'));
@@ -113,9 +132,9 @@ class ClassroomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // if (! auth()->user()->can('user.update')) {
-        //     abort(403, 'Unauthorized action.');
-        // }
+        if (! auth()->user()->can('ambiente.update')) {
+            abort(403, 'Unauthorized action.');
+        }
 
         if (request()->ajax()) {
             try {
@@ -155,6 +174,9 @@ class ClassroomController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! auth()->user()->can('ambiente.delete')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $classroom = Classroom::findOrFail($id);

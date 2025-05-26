@@ -10,11 +10,13 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Lista de Otros Ingresos</h4>
-                            <button class="btn btn-primary btn-round ml-auto btn-modal"
-                                data-href="{{ route('other_income.create') }}" data-container=".modal_other_income">
-                                <i class="fa fa-plus"></i>
-                                Registrar
-                            </button>
+                            @can('otros_ingresos.create')
+                                <button class="btn btn-primary btn-round ml-auto btn-modal"
+                                    data-href="{{ route('other_income.create') }}" data-container=".modal_other_income">
+                                    <i class="fa fa-plus"></i>
+                                    Registrar
+                                </button>
+                            @endcan
                         </div>
                     </div>
                     <div class="card-body">

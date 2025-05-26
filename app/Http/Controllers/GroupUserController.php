@@ -15,6 +15,9 @@ class GroupUserController extends Controller
      */
     public function index()
     {
+        if (! auth()->user()->can('grupo_usuario.index')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $group_users = GroupUser::select(['gru_id', 'gru_nombre', 'gru_obs', 'gru_estado'])->orderBy('gru_id', 'desc');
 
@@ -23,13 +26,20 @@ class GroupUserController extends Controller
                     $editUrl = route('group_users.edit', $group_users->gru_id);
                     $deleteUrl = route('group_users.destroy', $group_users->gru_id);
 
+                    $canEdit = auth()->user()->can('grupo_usuario.update');
+                    $canDelete = auth()->user()->can('grupo_usuario.delete');
+                    $editDisabled = $canEdit ? '' : 'disabled';
+                    $deleteDisabled = $canDelete ? '' : 'disabled';
+
                     $buttons = '
-                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-round btn-primary edit_group_user">
+                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_group_user"
+                    ' . $editDisabled . ' title="Editar">
                         <i class="icon-pencil"></i>
                     </button>
                     &nbsp;';
                     $buttons .= '
-                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-round btn-danger delete_group_user">
+                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_group_user"
+                    ' . $deleteDisabled . ' title="Eliminar">
                         <i class="icon-trash"></i>
                     </button>';
 
@@ -52,6 +62,9 @@ class GroupUserController extends Controller
      */
     public function create()
     {
+        if (! auth()->user()->can('grupo_usuario.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         return view('grupos_usuarios.create');
     }
 
@@ -60,6 +73,9 @@ class GroupUserController extends Controller
      */
     public function store(Request $request)
     {
+        if (! auth()->user()->can('grupo_usuario.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         $status = $request->has('gru_estado') ? 1 : 0;
         try {
             $input = $request->only(['gru_id', 'gru_nombre', 'gru_obs']);
@@ -90,16 +106,16 @@ class GroupUserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
+        if (! auth()->user()->can('grupo_usuario.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $group_user = GroupUser::find($id);
             return view('grupos_usuarios/edit', compact('group_user'));
@@ -111,9 +127,9 @@ class GroupUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // if (! auth()->user()->can('user.update')) {
-        //     abort(403, 'Unauthorized action.');
-        // }
+        if (! auth()->user()->can('grupo_usuario.update')) {
+            abort(403, 'Unauthorized action.');
+        }
 
         if (request()->ajax()) {
             try {
@@ -151,6 +167,9 @@ class GroupUserController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! auth()->user()->can('grupo_usuario.delete')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $group_user = GroupUser::findOrFail($id);
@@ -181,7 +200,7 @@ class GroupUserController extends Controller
     {
         $term = $request->input('term');
         $page = $request->input('page', 1);
-        $groups = GroupUser::where('gru_estado',1)->where('gru_nombre', 'like', '%' . $term . '%');
+        $groups = GroupUser::where('gru_estado', 1)->where('gru_nombre', 'like', '%' . $term . '%');
 
         return $groups->paginate(5, ['*'], 'page', $page);
     }

@@ -15,6 +15,9 @@ class TeacherController extends Controller
      */
     public function index()
     {
+        if (! auth()->user()->can('docente.index')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $teachers = Teacher::with('people')->select(['doc_id', 'doc_per_id', 'doc_estado'])->orderBy('doc_id', 'desc');
             return DataTables::of($teachers)
@@ -22,14 +25,21 @@ class TeacherController extends Controller
                     $editUrl = route('teachers.edit', $row->doc_id);
                     $deleteUrl = route('teachers.destroy', $row->doc_id);
 
+                    $canEdit = auth()->user()->can('docente.update');
+                    $canDelete = auth()->user()->can('docente.delete');
+                    $editDisabled = $canEdit ? '' : 'disabled';
+                    $deleteDisabled = $canDelete ? '' : 'disabled';
+
                     $buttons = '
-                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_teacher" title="Editar">
+                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_teacher"
+                    ' . $editDisabled . ' title="Editar">
                         <i class="icon-pencil"></i>
                     </button>
                     &nbsp;';
 
                     $buttons .= '
-                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_teacher" title="Eliminar">
+                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_teacher"
+                    ' . $deleteDisabled . ' title="Eliminar">
                         <i class="icon-trash"></i>
                     </button>';
 
@@ -58,6 +68,9 @@ class TeacherController extends Controller
      */
     public function create()
     {
+        if (! auth()->user()->can('docente.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         $grade_academic = UtilHelper::getGradeAcademic();
         return view('docentes.create', compact('grade_academic'));
     }
@@ -67,6 +80,9 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
+        if (! auth()->user()->can('docente.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         $status = $request->has('doc_estado') ? 1 : 0;
         try {
             $input = $request->only(['doc_per_id', 'doc_grado_academico', 'doc_pago', 'doc_observaciones', 'doc_fec_ing']);
@@ -99,7 +115,9 @@ class TeacherController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if (! auth()->user()->can('docente.view')) {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -107,6 +125,9 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
+        if (! auth()->user()->can('docente.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $teacher = Teacher::find($id);
             $grade_academic = UtilHelper::getGradeAcademic();
@@ -120,9 +141,9 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // if (! auth()->user()->can('user.update')) {
-        //     abort(403, 'Unauthorized action.');
-        // }
+        if (! auth()->user()->can('docente.update')) {
+            abort(403, 'Unauthorized action.');
+        }
 
         if (request()->ajax()) {
             try {
@@ -163,6 +184,9 @@ class TeacherController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! auth()->user()->can('docente.delete')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $teacher = Teacher::findOrFail($id);

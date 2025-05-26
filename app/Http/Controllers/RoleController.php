@@ -26,26 +26,33 @@ class RoleController extends Controller
      */
     public function index()
     {
-        if (request()->ajax()) {
+        if (! auth()->user()->can('permiso.index')) {
+            abort(403, 'Unauthorized action.');
+        }
 
+        if (request()->ajax()) {
             $roles = Role::select(['id', 'name']);
 
             return Datatables::of($roles)
                 ->addColumn('action', function ($row) {
                     $editUrl = route('roles.edit', $row->id);
                     $deleteUrl = route('roles.destroy', $row->id);
+                    $canEdit = auth()->user()->can('permiso.update');
+                    $canDelete = auth()->user()->can('permiso.delete');
+                    $editDisabled = $canEdit ? '' : 'disabled';
+                    $deleteDisabled = $canDelete ? '' : 'disabled';
 
                     $buttons = '
-                    <a href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary " title="Editar">
+                    <button onclick="window.location.href=\'' . $editUrl . '\'" class="btn btn-icon btn-sm btn-round btn-primary" title="Editar" ' . $editDisabled . '>
                         <i class="icon-pencil"></i>
-                    </a>
+                    </button>
                     &nbsp;';
 
                     $buttons .= '
-                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_role" title="Eliminar">
+                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_role" title="Eliminar"
+                    ' . $deleteDisabled . '>
                         <i class="icon-trash"></i>
                     </button>';
-
 
                     return $buttons;
                 })
@@ -61,6 +68,9 @@ class RoleController extends Controller
      */
     public function create()
     {
+        if (! auth()->user()->can('permiso.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         $permissions = Permission::pluck('name')->toArray();
 
         return view('permisos.create', compact('permissions'));
@@ -71,9 +81,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        // if (! auth()->user()->can('roles.create')) {
-        //     abort(403, 'Unauthorized action.');
-        // }
+        if (! auth()->user()->can('permiso.create')) {
+            abort(403, 'Unauthorized action.');
+        }
 
         try {
             $role_name = ucfirst($request->input('name'));
@@ -139,9 +149,9 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        // if (! auth()->user()->can('roles.update')) {
-        //     abort(403, 'Unauthorized action.');
-        // }
+        if (! auth()->user()->can('permiso.update')) {
+            abort(403, 'Unauthorized action.');
+        }
 
         $role = Role::with(['permissions'])
             ->find($id);
@@ -160,9 +170,9 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // if (! auth()->user()->can('roles.update')) {
-        //     abort(403, 'Unauthorized action.');
-        // }
+        if (! auth()->user()->can('permiso.update')) {
+            abort(403, 'Unauthorized action.');
+        }
 
         try {
             $role_name = ucfirst($request->input('name'));
@@ -220,6 +230,10 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! auth()->user()->can('permiso.delete')) {
+            abort(403, 'Unauthorized action.');
+        }
+
         if (request()->ajax()) {
             try {
                 $role = Role::findOrFail($id);

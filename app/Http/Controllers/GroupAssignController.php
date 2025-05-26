@@ -14,6 +14,9 @@ class GroupAssignController extends Controller
      */
     public function index()
     {
+        if (! auth()->user()->can('ag_grupo_usuario.index')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $group_assign = GroupAssign::select(['gus_id', 'gus_gru_id', 'gus_usu_id'])->orderBy('gus_id', 'desc');
 
@@ -30,13 +33,19 @@ class GroupAssignController extends Controller
                     $editUrl = route('group_assign.edit', $row->gus_id);
                     $deleteUrl = route('group_assign.destroy', $row->gus_id);
 
+                    $canEdit = auth()->user()->can('ag_grupo_usuario.update');
+                    $canDelete = auth()->user()->can('ag_grupo_usuario.delete');
+                    $editDisabled = $canEdit ? '' : 'disabled';
+                    $deleteDisabled = $canDelete ? '' : 'disabled';
+
                     $buttons = '
-                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-round btn-primary edit_group_assign" title="Editar">
+                    <button data-href="' . $editUrl . '" class="btn btn-icon btn-sm btn-round btn-primary edit_group_assign"
+                    ' . $editDisabled . ' title="Editar">
                         <i class="icon-pencil"></i>
                     </button>
                     &nbsp;';
                     $buttons .= '
-                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-round btn-danger delete_group_assign" title="Eliminar">
+                    <button data-href="' . $deleteUrl . '" class="btn btn-icon btn-sm btn-round btn-danger delete_group_assign" ' . $deleteDisabled . ' title="Eliminar">
                         <i class="icon-trash"></i>
                     </button>';
 
@@ -54,6 +63,9 @@ class GroupAssignController extends Controller
      */
     public function create()
     {
+        if (! auth()->user()->can('ag_grupo_usuario.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         return view('asignaciones_grupo.create');
     }
 
@@ -62,6 +74,9 @@ class GroupAssignController extends Controller
      */
     public function store(Request $request)
     {
+        if (! auth()->user()->can('ag_grupo_usuario.create')) {
+            abort(403, 'Unauthorized action.');
+        }
         try {
             $input = $request->only(['gus_id', 'gus_gru_id', 'gus_usu_id']);
             $group_assign  = GroupAssign::create($input);
@@ -92,7 +107,9 @@ class GroupAssignController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if (! auth()->user()->can('ag_grupo_usuario.view')) {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -100,6 +117,9 @@ class GroupAssignController extends Controller
      */
     public function edit($id)
     {
+        if (! auth()->user()->can('ag_grupo_usuario.update')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             $group_assign = GroupAssign::find($id);
             return view('asignaciones_grupo/edit', compact('group_assign'));
@@ -111,9 +131,9 @@ class GroupAssignController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // if (! auth()->user()->can('user.update')) {
-        //     abort(403, 'Unauthorized action.');
-        // }
+        if (! auth()->user()->can('ag_grupo_usuario.update')) {
+            abort(403, 'Unauthorized action.');
+        }
 
         if (request()->ajax()) {
             try {
@@ -150,6 +170,9 @@ class GroupAssignController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! auth()->user()->can('ag_grupo_usuario.delete')) {
+            abort(403, 'Unauthorized action.');
+        }
         if (request()->ajax()) {
             try {
                 $group_assign = GroupAssign::findOrFail($id);
