@@ -16,6 +16,10 @@
                                     Registrar
                                 </a>
                             @endcan
+                               <a class="btn btn-primary btn-round ml-auto" href="{{ route('roles.create') }}">
+                                    <i class="fa fa-plus"></i>
+                                    Registrar
+                                </a>
                         </div>
                     </div>
                     <div class="card-body">

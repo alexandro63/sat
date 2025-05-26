@@ -1,61 +1,178 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# README - Instalación del Proyecto Laravel SAT
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este documento describe los pasos necesarios para configurar y ejecutar el proyecto Laravel SAT en tu entorno local.
 
-## About Laravel
+## Requisitos del Sistema
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Antes de comenzar, asegúrate de tener instalados los siguientes componentes:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Herramientas Necesarias
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### 1. Visual Studio Code
+- **Descargar desde:** https://code.visualstudio.com/download
+- Editor de código recomendado para el desarrollo
 
-## Learning Laravel
+#### 2. XAMPP 8.2.12
+- **Descargar desde:** https://www.apachefriends.org/es/download.html
+- Paquete que incluye Apache, MySQL, PHP y phpMyAdmin
+- Versión específica requerida: 8.2.12
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### 3. Composer
+- **Descargar desde:** https://getcomposer.org/download/
+- Gestor de dependencias para PHP
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+#### 4. Git Bash
+- **Descargar desde:** https://git-scm.com/downloads/win
+- Cliente Git para Windows con terminal Bash
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Instalación del Proyecto
 
-## Laravel Sponsors
+### 1. Preparar el Entorno XAMPP
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. Navega hasta la carpeta de XAMPP:
+   ```
+   C:\xampp\htdocs
+   ```
 
-### Premium Partners
+2. Abre Git Bash en esta ubicación (clic derecho → "Git Bash Here")
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+### 2. Clonar el Repositorio
 
-## Contributing
+```bash
+git clone https://github.com/alexandro63/sat.git
+cd sat
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Instalar Dependencias
 
-## Code of Conduct
+```bash
+composer update
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4. Configurar Variables de Entorno
 
-## Security Vulnerabilities
+1. Copia el archivo de configuración de ejemplo:
+   ```bash
+   cp .env.example .env
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2. Edita el archivo `.env` y modifica la siguiente variable:
+   ```
+   DB_DATABASE=sat
+   ```
+   *Cambia "sat" por el nombre de tu base de datos*
 
-## License
+### 5. Configurar Laravel
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Ejecuta los siguientes comandos en orden:
+
+```bash
+# Generar clave de aplicación
+php artisan key:generate
+
+# Limpiar caché
+php artisan optimize:clear
+
+# Ejecutar migraciones y seeders
+php artisan migrate --seed
+
+# Iniciar servidor de desarrollo
+php artisan serve
+```
+
+### 6. Configurar XAMPP
+
+1. Ejecuta el panel de control de XAMPP:
+   ```
+   C:\xampp\xampp-control.exe
+   ```
+
+2. Activa los siguientes servicios:
+   - **Apache**
+   - **MySQL**
+
+### 7. Acceder a phpMyAdmin
+
+- **URL:** http://localhost/phpmyadmin
+- Aquí podrás administrar tu base de datos MySQL
+
+## Acceso a la Aplicación
+
+### Credenciales de Login
+
+- **Usuario:** `admin`
+- **Contraseña:** `123456`
+
+### URL de la Aplicación
+
+Una vez que ejecutes `php artisan serve`, la aplicación estará disponible en:
+- **URL:** http://localhost:8000
+
+## Solución de Problemas Comunes
+
+### Error de Conexión a Base de Datos
+- Verifica que MySQL esté ejecutándose en XAMPP
+- Confirma que el nombre de la base de datos en `.env` sea correcto
+- Asegúrate de que la base de datos existe en phpMyAdmin
+
+### Error de Composer
+- Verifica que Composer esté instalado correctamente
+- Ejecuta `composer --version` para confirmar la instalación
+
+### Error de Permisos
+- En Windows, ejecuta Git Bash como administrador si encuentras problemas de permisos
+
+## Estructura del Proyecto
+
+```
+sat/
+├── app/
+├── bootstrap/
+├── config/
+├── database/
+├── public/
+├── resources/
+├── routes/
+├── storage/
+├── tests/
+├── vendor/
+├── .env
+├── .env.example
+├── artisan
+├── composer.json
+└── README.md
+```
+
+## Comandos Útiles
+
+```bash
+# Limpiar caché de configuración
+php artisan config:clear
+
+# Limpiar caché de rutas
+php artisan route:clear
+
+# Limpiar caché de vistas
+php artisan view:clear
+
+# Ver rutas disponibles
+php artisan route:list
+
+# Crear nuevo controlador
+php artisan make:controller NombreController
+
+# Crear nueva migración
+php artisan make:migration nombre_migracion
+```
+
+## Soporte
+
+Si encuentras problemas durante la instalación, verifica que:
+- Todas las herramientas estén instaladas correctamente
+- Los servicios de XAMPP estén ejecutándose
+- Las variables de entorno estén configuradas correctamente
+- Los permisos de carpeta sean adecuados
+
+---
+
+**Nota:** Este proyecto requiere PHP 8.2 o superior. XAMPP 8.2.12 incluye la versión correcta de PHP.
