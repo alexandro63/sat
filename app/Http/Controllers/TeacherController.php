@@ -19,7 +19,7 @@ class TeacherController extends Controller
             abort(403, 'Unauthorized action.');
         }
         if (request()->ajax()) {
-            $teachers = Teacher::with('people')->select(['doc_id', 'doc_per_id', 'doc_estado'])->orderBy('doc_id', 'desc');
+            $teachers = Teacher::with('people')->select(['doc_id', 'doc_per_id','doc_grado_academico'])->orderBy('doc_id', 'desc');
             return DataTables::of($teachers)
                 ->addColumn('action', function ($row) {
                     $editUrl = route('teachers.edit', $row->doc_id);
@@ -52,8 +52,8 @@ class TeacherController extends Controller
                 ->addColumn('docente', function ($row) {
                     return $row->people->per_apellidopat . ' ' . $row->people->per_apellidomat . ' ' . $row->people->per_nombres;
                 })
-                ->addColumn('doc_estado', function ($row) {
-                    return $row->doc_estado == 1 ? 'Sí' : 'No';
+                ->addColumn('profesion',function($row){
+                    return $row->doc_grado_academico;
                 })
                 ->removeColumn(['doc_id'])
                 ->rawColumns(['action'])
@@ -85,8 +85,7 @@ class TeacherController extends Controller
         }
         $status = $request->has('doc_estado') ? 1 : 0;
         try {
-            $input = $request->only(['doc_per_id', 'doc_grado_academico', 'doc_pago', 'doc_observaciones', 'doc_fec_ing']);
-            $input['doc_estado'] = $status;
+            $input = $request->only(['doc_per_id', 'doc_grado_academico','doc_observaciones', 'doc_fec_ing']);
             $teacher  = Teacher::create($input);
 
             $output = [
@@ -147,15 +146,13 @@ class TeacherController extends Controller
 
         if (request()->ajax()) {
             try {
-                $input = $request->only(['doc_per_id', 'doc_grado_academico', 'doc_pago', 'doc_observaciones', 'doc_fec_ing']);
+                $input = $request->only(['doc_per_id', 'doc_grado_academico', 'doc_observaciones', 'doc_fec_ing']);
 
                 $teacher = Teacher::findOrFail($id);
                 $teacher->doc_per_id = $input['doc_per_id'];
                 $teacher->doc_grado_academico = $input['doc_grado_academico'];
-                $teacher->doc_pago = $input['doc_pago'];
                 $teacher->doc_observaciones = $input['doc_observaciones'];
                 $teacher->doc_fec_ing = $input['doc_fec_ing'];
-                $teacher->doc_estado = $request->has('doc_estado') ? 1 : 0;
                 $teacher->save();
 
                 $output = [

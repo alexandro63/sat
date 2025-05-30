@@ -47,25 +47,9 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-group-default required">
-                            <label for="doc_pago">Pago por Hora Acádemica</label>
-                            <input type="text" class="form-control input-number" placeholder="Ingrese Pago x Hora"
-                                name="doc_pago" id="doc_pago">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group form-group-default">
                             <label for="doc_observaciones">Observaciones</label>
                             <textarea class="form-control" placeholder="Ingrese observaciones" name="doc_observaciones" id="doc_observaciones"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="" name="doc_estado">
-                                <span class="form-check-sign">A Prueba?</span>
-                            </label>
                         </div>
                     </div>
                 </div>

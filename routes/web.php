@@ -43,60 +43,53 @@ Route::middleware(['atlantis_menu', 'set_session_data', 'check_user_login', 'aut
         Route::post('get-roles', [RoleController::class, 'getRoleData']);
         Route::post('get-routes', [RoleController::class, 'getRoutes']);
 
-        //Users
-        Route::resource('users', UserController::class);
-        Route::get('get-users', [UserController::class, 'getUserData']);
-
-        //Group User
-        Route::resource('group_users', GroupUserController::class);
-        Route::get('get-groups', [GroupUserController::class, 'getGroupUserData']);
-
         //People
         Route::resource('people', PeopleController::class);
         Route::get('get-people', [PeopleController::class, 'getPeopleData']);
 
-        //Group Assign
-        Route::resource('group_assign', GroupAssignController::class);
+        //Users
+        Route::resource('users', UserController::class);
+        Route::get('get-users', [UserController::class, 'getUserData']);
     });
+
     /**Registration */
-    // Teachers
-    Route::resource('registration/teachers', TeacherController::class);
-    Route::get('registration/get-teachers', [TeacherController::class, 'getTeachersData']);
+    Route::prefix('registration')->group(function () {
+        // Teachers
+        Route::resource('teachers', TeacherController::class);
+        Route::get('get-teachers', [TeacherController::class, 'getTeachersData']);
 
-    //Degrees
-    Route::resource('registration/degrees', DegreeController::class);
-    Route::get('registration/get-degrees', [DegreeController::class, 'getDegreesData']);
+        //Degrees
+        Route::resource('degrees', DegreeController::class);
+        Route::get('get-degrees', [DegreeController::class, 'getDegreesData']);
 
-    //Subjets
-    Route::resource('registration/subjects', SubjectController::class);
-    Route::get('registration/get-subjects', [SubjectController::class, 'getSubjectsData']);
+        //Subjets
+        Route::resource('subjects', SubjectController::class);
+        Route::get('get-subjects', [SubjectController::class, 'getSubjectsData']);
 
-    //Classrooms
-    Route::resource('registration/classrooms', ClassroomController::class);
-    Route::get('registration/get-classrooms', [ClassroomController::class, 'getClassroomsData']);
+        //Classrooms
+        Route::resource('classrooms', ClassroomController::class);
+        Route::get('get-classrooms', [ClassroomController::class, 'getClassroomsData']);
 
-    //Teacher Settings
-    Route::resource('registration/teacher_settings', TeacherSettingController::class);
+        //Teacher Settings
+        Route::resource('teacher_settings', TeacherSettingController::class);
 
-    //Academic Planning
-    Route::resource('registration/academic_planning', AcademicPlanningController::class);
+        //Academic Planning
+        Route::resource('academic_planning', AcademicPlanningController::class);
 
-    //Student Enrollments
-    Route::resource('registration/student_enrollments', StudentEnrollmentController::class);
-    Route::post('registration/get-students', [StudentEnrollmentController::class, 'getStudentsData']);
+        //Student Enrollments
+        Route::resource('student_enrollments', StudentEnrollmentController::class);
+        Route::post('get-students', [StudentEnrollmentController::class, 'getStudentsData']);
 
-    //Other Income
-    Route::resource('registration/other_income', OtherIncomeController::class);
+        //Other Income
+        Route::resource('other_income', OtherIncomeController::class);
 
-    //Administrative
-    Route::resource('registration/administrative', AdministrativeController::class);
-
-    //Enrolled Students
-    Route::resource('registration/enrolled_students', EnrolledStudentController::class);
+        //Administrative
+        Route::resource('administrative', AdministrativeController::class);
+    });
 
     /** Reports */
     //Reportes de Avance Estudiante
-      Route::prefix('reports')->group(function () {
+    Route::prefix('reports')->group(function () {
         Route::get('avance-estudiante', [ReportController::class, 'avanceEstudiante'])->name('avance_estudiante.index');
         Route::get('entregas-avance', [ReportController::class, 'entregasAvance'])->name('entregas_avance.index');
     });

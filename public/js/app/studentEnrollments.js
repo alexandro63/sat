@@ -111,5 +111,71 @@ $(document).ready(function () {
                 error: () => console.error("Fallo al cargar datos"),
             },
         });
+
+        $("#alu_doc_id").select2({
+            dropdownParent: $("div.modal_student_enrollment"),
+            width: "100%",
+            placeholder: LANG.select,
+            allowClear: true,
+            minimumInputLength: 2,
+            ajax: {
+                url: "/registration/get-degrees",
+                type: "GET",
+                dataType: "json",
+                delay: 250,
+                data: (params) => ({
+                    term: params.term,
+                    page: params.page || 1,
+                }),
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    const formatted = data.data.map((item) => ({
+                        id: item.car_id,
+                        text: item.car_nombre,
+                    }));
+                    return {
+                        results: formatted,
+                        pagination: {
+                            more: data.last_page > params.page,
+                        },
+                    };
+                },
+                cache: true,
+                error: () => console.error("Fallo al cargar datos"),
+            },
+        });
+
+        $("#alu_doc_rev_id").select2({
+            dropdownParent: $("div.modal_student_enrollment"),
+            width: "100%",
+            placeholder: LANG.select,
+            allowClear: true,
+            minimumInputLength: 2,
+            ajax: {
+                url: "/registration/get-degrees",
+                type: "GET",
+                dataType: "json",
+                delay: 250,
+                data: (params) => ({
+                    term: params.term,
+                    page: params.page || 1,
+                }),
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    const formatted = data.data.map((item) => ({
+                        id: item.car_id,
+                        text: item.car_nombre,
+                    }));
+                    return {
+                        results: formatted,
+                        pagination: {
+                            more: data.last_page > params.page,
+                        },
+                    };
+                },
+                cache: true,
+                error: () => console.error("Fallo al cargar datos"),
+            },
+        });
     });
 });

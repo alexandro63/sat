@@ -9,7 +9,7 @@ $(document).ready(function () {
         columns: [
             { data: "documento" },
             { data: "docente" },
-            { data: "doc_estado" },
+            { data: "profesion" },
             { data: "action", orderable: false, searchable: false },
         ],
     });

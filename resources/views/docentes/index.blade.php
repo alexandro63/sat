@@ -26,15 +26,13 @@
                                     <tr>
                                         <th>C.I.</th>
                                         <th>Docente</th>
-                                        <th>Aprueba?</th>
+                                        <th>Profesión</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>

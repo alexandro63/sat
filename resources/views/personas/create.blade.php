@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
-                            <label>Primer Apellido</label>
+                            <label>Segundo Apellido</label>
                             <input name="per_apellidomat" type="text" class="form-control"
                                 placeholder="Ingrese 2do apellido">
                         </div>

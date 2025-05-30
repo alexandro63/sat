@@ -92,28 +92,11 @@ return [
                 'route' => 'users.index',
                 'title' => 'Usuarios',
                 'permission' => 'usuario.index',
-            ],
-            [
-                'route' => 'group_users.index',
-                'title' => 'Grupo de usuarios',
-                'permission' => 'grupo_usuario.index',
-
-            ],
-            [
-                'route' => 'group_assign.index',
-                'title' => 'Asignaciones de grupos',
-                'permission' => 'ag_grupo_usuario.index',
-
-            ],
+            ]
 
         ],
 
         'registration' => [
-            [
-                'route' => 'classrooms.index',
-                'title' => 'Ambientes',
-                'permission' => 'ambiente.index',
-            ],
             [
                 'route' => 'degrees.index',
                 'title' => 'Carreras',
@@ -121,7 +104,7 @@ return [
             ],
             [
                 'route' => 'subjects.index',
-                'title' => 'Materias',
+                'title' => 'Modulo',
                 'permission' => 'materia.index',
             ],
             [
@@ -134,27 +117,27 @@ return [
                 'title' => 'Docentes',
                 'permission' => 'docente.index',
             ],
-            [
-                'route' => 'academic_planning.index',
-                'title' => 'Planificación acádemica',
-                'permission' => 'plan_academico.index',
-            ],
+            // [
+            //     'route' => 'academic_planning.index',
+            //     'title' => 'Planificación acádemica',
+            //     'permission' => 'plan_academico.index',
+            // ],
             [
                 'route' => 'student_enrollments.index',
                 'title' => 'Inscripción alumnos',
                 'permission' => 'alumno_inscripcion.index',
             ],
 
-            [
-                'route' => 'other_income.index',
-                'title' => 'Otros ingresos',
-                'permission' => 'otros_ingresos.index',
-            ],
-            [
-                'route' => 'teacher_settings.index',
-                'title' => 'Ajustes docentes',
-                'permission' => 'ajuste_docente.index',
-            ]
+            // [
+            //     'route' => 'other_income.index',
+            //     'title' => 'Otros ingresos',
+            //     'permission' => 'otros_ingresos.index',
+            // ],
+            // [
+            //     'route' => 'teacher_settings.index',
+            //     'title' => 'Ajustes docentes',
+            //     'permission' => 'ajuste_docente.index',
+            // ]
         ],
 
         'modules' => [

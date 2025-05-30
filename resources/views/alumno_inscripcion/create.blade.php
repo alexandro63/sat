@@ -43,26 +43,16 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-default required">
-                                <label form="alu_reg_matr">Total Matricula</label>
-                                <div class="input-icon">
-                                    <input name="alu_reg_matr" type="text" class="form-control input-number"
-                                        id="alu_reg_matr" placeholder="Ingrese total matricula">
-                                    <span class="input-icon-addon">
-                                        Bs.
-                                    </span>
-                                </div>
+                                <label for="alu_doc_id">Docente</label>
+                                <select class="form-control" name="alu_doc_id" id="alu_doc_id">
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-default required">
-                                <label form="alu_mensualidad">Total Mensualidad</label>
-                                <div class="input-icon">
-                                    <input name="alu_mensualidad" type="text" class="form-control input-number"
-                                        id="alu_mensualidad" placeholder="Ingrese total mensualidad">
-                                    <span class="input-icon-addon">
-                                        Bs.
-                                    </span>
-                                </div>
+                                <label for="alu_doc_rev_id">Revisor</label>
+                                <select class="form-control" name="alu_doc_rev_id" id="alu_doc_rev_id">
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -78,12 +68,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-default required">
-                                <label form="alu_fec_pago">Fecha de Pago</label>
-                                <input name="alu_fec_pago" type="date" class="form-control" id="alu_fec_pago">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-default required">
                                 <label for="alu_turno">Turno</label>
                                 <select class="form-control" name="alu_turno" id="alu_turno">
                                     <option value="" disabled selected>Seleccione</option>
@@ -95,15 +79,23 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-default required">
-                                <label for="alu_curso">Curso</label>
-                                <select class="form-control" name="alu_curso" id="alu_curso">
-                                    <option value="" disabled selected>Seleccione</option>
-                                    @foreach ($courses as $key => $course)
-                                        <option value="{{ $key }}"> {{ $course }}</option>
-                                    @endforeach
-                                </select>
+                                <label form="alu_fec_1er">Fecha de 1ra Entrega</label>
+                                <input name="alu_fec_1er" type="date" class="form-control" id="alu_fec_1er">
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default required">
+                                <label form="alu_fec_2do">Fecha de 2do Entrega</label>
+                                <input name="alu_fec_2do" type="date" class="form-control" id="alu_fec_2do">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default required">
+                                <label form="alu_fec_pre">Fecha de Predefensa</label>
+                                <input name="alu_fec_pre" type="date" class="form-control" id="alu_fec_pre">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

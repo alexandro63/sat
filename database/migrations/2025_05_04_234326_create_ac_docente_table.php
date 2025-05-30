@@ -16,9 +16,7 @@ return new class extends Migration
 
             $table->foreignId('doc_per_id')->constrained('gr_persona','per_id')->onDelete('cascade');
             $table->string('doc_grado_academico');
-            $table->integer('doc_pago');
             $table->string('doc_observaciones')->nullable();
-            $table->boolean('doc_estado')->default(0);
             $table->date('doc_fec_ing');
 
             $table->timestamps();
