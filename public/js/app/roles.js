@@ -26,10 +26,10 @@ $(document).ready(function () {
     const startPath = $("#start_path");
 
     if (!startPath.val()) {
-        if (!startPath.find("option[value='home']").length) {
-            startPath.append(new Option("home", "home", true, true));
+        if (!startPath.find("option[value='inicio']").length) {
+            startPath.append(new Option("inicio", "inicio", true, true));
         }
-        startPath.val("home").trigger("change");
+        startPath.val("inicio").trigger("change");
     }
 
     startPath.select2({
@@ -38,7 +38,7 @@ $(document).ready(function () {
         allowClear: true,
         minimumInputLength: 1,
         ajax: {
-            url: "/administration/get-routes",
+            url: "/administracion/get-routes",
             type: "POST",
             dataType: "json",
             delay: 250,
