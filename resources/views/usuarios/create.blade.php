@@ -18,7 +18,7 @@
                 Llena todos los campos para crear un nuevo registro.
             </p>
 
-            <form action="{{ route('users.store') }}" method="POST" id="add_user">
+            <form action="{{ route('usuarios.store') }}" method="POST" id="add_user">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">

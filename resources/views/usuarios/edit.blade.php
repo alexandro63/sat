@@ -18,7 +18,7 @@
                 Llena todos los campos con (*) para actualizar el registro.
             </p>
 
-            <form action="{{ route('users.update', $user->id) }}" method="POST" id="edit_user">
+            <form action="{{ route('usuarios.update', $user->id) }}" method="POST" id="edit_user">
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -26,7 +26,8 @@
                         <div class="form-group form-group-default required">
                             <label>Persona</label>
                             <select class="form-control" name="per_id" id="per_id">
-                                <option value="{{ $user->people->per_id }}">{{ $user->people->per_nombres }}</option>
+                                <option value="{{ $user->persona->id }}">{{ $user->persona->nombres }}
+                                    {{ $user->persona->apellidopat }} {{ $user->persona->apellidomat}}</option>
                             </select>
                         </div>
                     </div>

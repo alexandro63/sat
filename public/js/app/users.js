@@ -3,7 +3,7 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         ajax: {
-            url: "users",
+            url: "usuarios",
             type: "GET",
         },
         columns: [
@@ -35,7 +35,7 @@ $(document).ready(function () {
             allowClear: true,
             minimumInputLength: 1,
             ajax: {
-                url: "/administration/get-people",
+                url: "/administracion/get-personas",
                 type: "GET",
                 dataType: "json",
                 delay: 250,
@@ -46,14 +46,16 @@ $(document).ready(function () {
                 processResults: function (data, params) {
                     params.page = params.page || 1;
                     const formatted = data.data.map((item) => ({
-                        id: item.per_id,
+                        id: item.id,
                         text:
                             "( C.I. " +
-                            item.per_ci +
+                            item.carnet +
                             ") " +
-                            item.per_nombres +
+                            item.nombres +
                             " " +
-                            item.per_apellidopat,
+                            item.apellidopat +
+                            " " +
+                            item.apellidomat,
                     }));
                     return {
                         results: formatted,

@@ -11,7 +11,7 @@
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Lista de Usuarios</h4>
                             <button class="btn btn-primary btn-round ml-auto btn-modal"
-                                data-href="{{ route('users.create') }}" data-container=".modal_user">
+                                data-href="{{ route('usuarios.create') }}" data-container=".modal_user">
                                 <i class="fa fa-plus"></i>
                                 Registrar
                             </button>

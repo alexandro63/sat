@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('user_name')->unique();
             $table->foreignId('per_id')->constrained('persona')->onDelete('cascade');
             $table->boolean('status')->default(1);
-            $table->text('obs')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable()->nullable();
             $table->string('password')->nullable();

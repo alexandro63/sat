@@ -31,13 +31,13 @@ class UsuarioController extends Controller
             abort(403, 'Unauthorized action.');
         }
         if (request()->ajax()) {
-            $users = User::with('people')->select(['id', 'user_name', 'per_id', 'status'])->orderBy('id', 'desc');
+            $users = User::with('persona')->select(['id', 'user_name', 'per_id', 'status'])->orderBy('id', 'desc');
 
             return DataTables::of($users)
                 ->addColumn('action', function ($user) {
                     $user_auth = Auth::user()->id;
-                    $editUrl = route('users.edit', $user->id);
-                    $deleteUrl = route('users.destroy', $user->id);
+                    $editUrl = route('usuarios.edit', $user->id);
+                    $deleteUrl = route('usuarios.destroy', $user->id);
 
                     $canEdit = auth()->user()->can('usuario.update');
                     $canDelete = auth()->user()->can('usuario.delete') && $user->id !== $user_auth;
@@ -60,8 +60,8 @@ class UsuarioController extends Controller
                     return $buttons;
                 })
                 ->editColumn('per_id', function ($row) {
-                    if ($row->people) {
-                        return $row->people->per_nombres . ' ' . $row->people->per_apellidopat . ' ' . $row->people->per_apellidomat;
+                    if ($row->persona) {
+                        return $row->persona->nombres . ' ' . $row->persona->apellidopat . ' ' . $row->persona->apellidomat;
                     }
                     return '';
                 })
@@ -253,18 +253,18 @@ class UsuarioController extends Controller
         $term = $request->input('term');
         $page = $request->input('page', 1);
 
-        $users = User::where('status', 1)->leftJoin('gr_persona', 'users.per_id', '=', 'gr_persona.per_id')
+        $users = User::where('status', 1)->leftJoin('persona', 'users.per_id', '=', 'persona.per_id')
             ->where(function ($query) use ($term) {
                 $query->where('users.user_name', 'like', '%' . $term . '%')
-                    ->orWhere('gr_persona.per_nombres', 'like', '%' . $term . '%')
-                    ->orWhere('gr_persona.per_apellidopat', 'like', '%' . $term . '%')
-                    ->orWhere('gr_persona.per_apellidomat', 'like', '%' . $term . '%');
+                    ->orWhere('persona.nombres', 'like', '%' . $term . '%')
+                    ->orWhere('persona.apellidopat', 'like', '%' . $term . '%')
+                    ->orWhere('persona.apellidomat', 'like', '%' . $term . '%');
             })
             ->select(
                 'users.*',
-                'gr_persona.per_nombres as persona_nombre',
-                'gr_persona.per_apellidopat as persona_apellidopat',
-                'gr_persona.per_apellidomat as persona_apellidomat'
+                'persona.nombres as persona_nombre',
+                'persona.apellidopat as persona_apellidopat',
+                'persona.apellidomat as persona_apellidomat'
             );
 
         return $users->paginate(5, ['*'], 'page', $page);
