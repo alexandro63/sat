@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-default required">
-                                <label for="alu_doc_rev_id">Revisor</label>
+                                <label for="alu_doc_rev_id">Doc. Revisor</label>
                                 <select class="form-control" name="alu_doc_rev_id" id="alu_doc_rev_id">
                                 </select>
                             </div>
@@ -77,7 +77,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <div class="form-group form-group-default required">
                                 <label form="alu_fec_1er">Fecha de 1ra Entrega</label>
                                 <input name="alu_fec_1er" type="date" class="form-control" id="alu_fec_1er">
@@ -94,7 +94,7 @@
                                 <label form="alu_fec_pre">Fecha de Predefensa</label>
                                 <input name="alu_fec_pre" type="date" class="form-control" id="alu_fec_pre">
                             </div>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </div>

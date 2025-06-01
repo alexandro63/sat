@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/inicio';
 
     /**
      * Create a new controller instance.
@@ -57,6 +57,6 @@ class LoginController extends Controller
             return $role->start_path;
         }
 
-        return '/home';
+        return '/inicio';
     }
 }

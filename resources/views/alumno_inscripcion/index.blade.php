@@ -28,8 +28,7 @@
                                         <th>C.I.</th>
                                         <th>Alumno</th>
                                         <th>Carrera</th>
-                                        <th>Curso</th>
-                                        <th>Turno</th>
+                                        <th>Doc. Revisor</th>
                                         <th>Concluyó Carrera?</th>
                                         <th>Habilitado?</th>
                                         <th>Acciones</th>

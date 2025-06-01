@@ -35,7 +35,10 @@
                                 <select class="form-control" name="alu_per_id" id="alu_per_id">
                                     @if (!empty($student_enrollment->alu_per_id))
                                         <option value="{{ $student_enrollment->alu_per_id }}" selected>
-                                            (C.I. {{ $student_enrollment->student->per_ci }}) {{ $student_enrollment->student->per_nombres }} {{ $student_enrollment->student->per_apellidopat }} {{ $student_enrollment->student->per_apellidomat }}
+                                            (C.I. {{ $student_enrollment->student->per_ci }})
+                                            {{ $student_enrollment->student->per_nombres }}
+                                            {{ $student_enrollment->student->per_apellidopat }}
+                                            {{ $student_enrollment->student->per_apellidomat }}
                                         </option>
                                     @endif
                                 </select>
@@ -55,28 +58,16 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-default required">
-                                <label form="alu_reg_matr">Total Matricula</label>
-                                <div class="input-icon">
-                                    <input name="alu_reg_matr" type="text" class="form-control input-number"
-                                        id="alu_reg_matr" placeholder="Ingrese total matricula"
-                                        value="{{ $student_enrollment->alu_reg_matr }}">
-                                    <span class="input-icon-addon">
-                                        Bs.
-                                    </span>
-                                </div>
+                                <label for="alu_doc_id">Docente</label>
+                                <select class="form-control" name="alu_doc_id" id="alu_doc_id">
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-default required">
-                                <label form="alu_mensualidad">Total Mensualidad</label>
-                                <div class="input-icon">
-                                    <input name="alu_mensualidad" type="text" class="form-control input-number"
-                                        id="alu_mensualidad" placeholder="Ingrese total mensualidad"
-                                        value="{{ $student_enrollment->alu_mensualidad }}">
-                                    <span class="input-icon-addon">
-                                        Bs.
-                                    </span>
-                                </div>
+                                <label for="alu_doc_rev_id">Doc. Revisor</label>
+                                <select class="form-control" name="alu_doc_rev_id" id="alu_doc_rev_id">
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -93,13 +84,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-default required">
-                                <label form="alu_fec_pago">Fecha de Pago</label>
-                                <input name="alu_fec_pago" type="date" class="form-control" id="alu_fec_pago"
-                                    value="{{ $student_enrollment->alu_fec_pago }}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-default required">
                                 <label for="alu_turno">Turno</label>
                                 <select class="form-control" name="alu_turno" id="alu_turno">
                                     <option value="" disabled selected>Seleccione</option>
@@ -107,19 +91,6 @@
                                         <option value="{{ $key }}"
                                             {{ $student_enrollment->alu_turno == $key ? 'selected' : '' }}>
                                             {{ $shift }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-default required">
-                                <label for="alu_curso">Curso</label>
-                                <select class="form-control" name="alu_curso" id="alu_curso">
-                                    <option value="" disabled selected>Seleccione</option>
-                                    @foreach ($courses as $key => $course)
-                                        <option value="{{ $key }}"
-                                            {{ $student_enrollment->alu_curso == $key ? 'selected' : '' }}>
-                                            {{ $course }}</option>
                                     @endforeach
                                 </select>
                             </div>

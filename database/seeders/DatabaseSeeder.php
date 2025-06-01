@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\People;
+use App\Models\Persona;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
@@ -16,16 +16,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(PermissionsTableSeeder::class);
 
-        $people = People::factory()->create([
-            'per_nombres' => 'SuperAdmin',
-            'per_apellidopat' => 'System',
-            'per_apellidomat' => 'Controller',
-            'per_ci' => '12345678'
+        $persona = Persona::factory()->create([
+            'nombres' => 'SuperAdmin',
+            'apellidopat' => 'System',
+            'apellidomat' => 'Controller',
+            'carnet' => '12345678'
         ]);
 
-        $user = User::factory()->create([
+        $usuario = User::factory()->create([
             'user_name' => 'Admin',
-            'per_id' => $people->per_id,
+            'per_id' => $persona->id,
             'status' => 1,
             'email' => 'admin@gmail.com',
             'password' => bcrypt('123456'),
@@ -34,10 +34,10 @@ class DatabaseSeeder extends Seeder
         $role = Role::create([
             'name' => 'Admin',
             'guard_name' => 'web',
-            'start_path' => 'home',
+            'start_path' => 'inicio',
             'is_default' => 1,
         ]);
-        $user->assignRole($role->name);
+        $usuario->assignRole($role->name);
 
         // $batchSize = 1000;
         // $total = 1000;
@@ -47,9 +47,9 @@ class DatabaseSeeder extends Seeder
         //     foreach ($peopleBatch as $person) {
         //         User::factory()->create([
         //             'user_name' => fake()->unique()->userName(),
-        //             'per_id'    => $person->per_id,
+        //             'id'    => $person->id,
         //             'status'    => rand(0, 1),
-        //             'email'     => $person->per_nombres . '.' . $person->per_id . '@gmail.com',
+        //             'email'     => $person->per_nombres . '.' . $person->id . '@gmail.com',
         //             'password'  => bcrypt('123456'),
         //         ]);
         //     }

@@ -108,36 +108,16 @@ return [
                 'permission' => 'materia.index',
             ],
             [
-                'route' => 'administrative.index',
-                'title' => 'Administrativo',
-                'permission' => 'administrativo.index',
-            ],
-            [
                 'route' => 'teachers.index',
                 'title' => 'Docentes',
                 'permission' => 'docente.index',
             ],
-            // [
-            //     'route' => 'academic_planning.index',
-            //     'title' => 'Planificación acádemica',
-            //     'permission' => 'plan_academico.index',
-            // ],
             [
                 'route' => 'student_enrollments.index',
-                'title' => 'Inscripción alumnos',
+                'title' => 'Alumnos',
                 'permission' => 'alumno_inscripcion.index',
             ],
 
-            // [
-            //     'route' => 'other_income.index',
-            //     'title' => 'Otros ingresos',
-            //     'permission' => 'otros_ingresos.index',
-            // ],
-            // [
-            //     'route' => 'teacher_settings.index',
-            //     'title' => 'Ajustes docentes',
-            //     'permission' => 'ajuste_docente.index',
-            // ]
         ],
 
         'modules' => [

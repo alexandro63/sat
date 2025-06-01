@@ -18,7 +18,7 @@ class StudentEnrollmentController extends Controller
             abort(403, 'Unauthorized action.');
         }
         if (request()->ajax()) {
-            $student_enrollments = StudentEnrollment::select(['alu_id', 'alu_per_id', 'alu_car_id', 'alu_turno', 'alu_curso', 'alu_estado', 'alu_con_car'])->orderBy('alu_id', 'desc');
+            $student_enrollments = StudentEnrollment::select(['alu_id', 'alu_per_id', 'alu_car_id', 'alu_doc_rev_id', 'alu_estado', 'alu_con_car'])->orderBy('alu_id', 'desc');
 
             return DataTables::of($student_enrollments)
                 ->addColumn('action', function ($row) {
@@ -40,7 +40,7 @@ class StudentEnrollmentController extends Controller
                     &nbsp;';
 
                     $buttons .= '
-                    <button data-href="' . $showUrl . '" class="btn btn-icon btn-sm btn-round btn-secondary btn-modal" ' . $viewDisabled . ' title="Asignación de materia"
+                    <button data-href="' . $showUrl . '" class="btn btn-icon btn-sm btn-round btn-secondary btn-modal" ' . $viewDisabled . ' title="Entregas"
                     data-container=".modal_student_enrollment">
                         <i class="far fa-folder"></i>
                     </button>
@@ -62,8 +62,8 @@ class StudentEnrollmentController extends Controller
                 ->addColumn('carrera', function ($row) {
                     return $row->degree->car_nombre;
                 })
-                ->editColumn('alu_curso', function ($row) {
-                    return ucfirst($row->alu_curso);
+                ->editColumn('docente_rev', function ($row) {
+                    return $row->teacher->people->per_apellidopat . ' ' . $row->teacher->people->per_apellidomat . ' ' . $row->teacher->people->per_nombres;
                 })
                 ->editColumn('alu_turno', function ($row) {
                     return ucfirst($row->alu_turno);

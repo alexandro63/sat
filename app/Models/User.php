@@ -49,9 +49,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function people()
+    public function persona()
     {
-        return $this->belongsTo(People::class, 'per_id');
+        return $this->belongsTo(Persona::class);
     }
 
 }
