@@ -6,29 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Estudiante extends Model
 {
-    protected $table = 'alumno';
-    protected $primaryKey = 'alu_id';
-    protected $guarded = ['alu_id'];
+    protected $table = 'estudiante';
+    protected $guarded = ['id'];
 
-    public function student()
+    public function estudiante()
     {
-        return $this->belongsTo(People::class, 'alu_per_id', 'per_id');
+        return $this->belongsTo(Persona::class, 'per_id');
     }
 
-    public function teacher()
+    public function docente()
     {
-        return $this->belongsTo(Teacher::class, 'alu_doc_rev_id', 'per_id');
+        return $this->belongsTo(Docente::class, 'doc_rev_id');
     }
 
-    public function people()
+    public function persona()
     {
-        return $this->belongsTo(People::class, 'alu_per_id', 'per_id');
+        return $this->belongsTo(Persona::class, 'per_id');
     }
 
-    public function degree()
-    {
-        return $this->belongsTo(Degree::class, 'alu_car_id', 'car_id');
-    }
 
     public static function shifts()
     {
@@ -36,14 +31,6 @@ class Estudiante extends Model
             'mañana' => 'Mañana',
             'tarde' => 'Tarde',
             'noche' => 'Noche'
-        ];
-    }
-
-    public static function courses()
-    {
-        return [
-            'regular' => 'Regular',
-            'acelerado' => 'Acelerado'
         ];
     }
 }

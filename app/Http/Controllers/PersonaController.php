@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\People;
+use App\Models\Persona;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -20,15 +20,15 @@ class PersonaController extends Controller
         }
 
         if (request()->ajax()) {
-            $people = People::select(['per_id', 'per_nombres', 'per_apellidopat', 'per_apellidomat', 'per_ci', 'per_estado'])->orderBy('per_id', 'desc');
+            $persona = Persona::select(['id', 'nombres', 'apellidopat', 'apellidomat', 'carnet', 'estado'])->orderBy('id', 'desc');
 
-            return DataTables::of($people)
-                ->addColumn('action', function ($people) {
-                    $user_auth = Auth::user()->per_id;
-                    $editUrl = route('people.edit', $people->per_id);
-                    $deleteUrl = route('people.destroy', $people->per_id);
+            return DataTables::of($persona)
+                ->addColumn('action', function ($row) {
+                    $user_auth = Auth::user()->id;
+                    $editUrl = route('personas.edit', $row->id);
+                    $deleteUrl = route('personas.destroy', $row->id);
                     $canEdit = auth()->user()->can('permiso.update');
-                    $canDelete = auth()->user()->can('permiso.delete') && $people->per_id !== $user_auth;
+                    $canDelete = auth()->user()->can('permiso.delete') && $row->id !== $user_auth;
                     $editDisabled = $canEdit ? '' : 'disabled';
                     $deleteDisabled = $canDelete ? '' : 'disabled';
                     $buttons = '
@@ -46,8 +46,8 @@ class PersonaController extends Controller
 
                     return $buttons;
                 })
-                ->editColumn('per_estado', function ($row) {
-                    return $row->per_estado == 1 ? 'Sí' : 'No';
+                ->editColumn('estado', function ($row) {
+                    return $row->estado == 1 ? 'Sí' : 'No';
                 })
                 ->removeColumn(['per_id'])
                 ->rawColumns(['action'])
@@ -77,13 +77,12 @@ class PersonaController extends Controller
         }
         $status = $request->has('per_estado') ? 1 : 0;
         try {
-            $input = $request->only(['per_nombres', 'per_apellidopat', 'per_apellidomat', 'per_ci', 'per_direccion', 'per_telefono', 'per_celular', 'per_estado']);
-            $input['per_estado'] = $status;
-            $person  = People::create($input);
+            $input = $request->only(['nombres', 'apellidopat', 'apellidomat', 'carnet', 'direccion', 'telefono', 'correo', 'fecha_nacimiento', 'estado']);
+            $input['estado'] = $status;
+            Persona::create($input);
 
             $output = [
                 'success' => true,
-                'data'    => $person,
                 'msg'     => __('messages.add_success'),
             ];
         } catch (\Exception $e) {
@@ -121,8 +120,8 @@ class PersonaController extends Controller
             abort(403, 'Unauthorized action.');
         }
         if (request()->ajax()) {
-            $person = People::find($id);
-            return view('personas/edit', compact('person'));
+            $persona = Persona::find($id);
+            return view('personas/edit', compact('persona'));
         }
     }
 
@@ -136,18 +135,19 @@ class PersonaController extends Controller
         }
         if (request()->ajax()) {
             try {
-                $input = $request->only(['per_nombres', 'per_apellidopat', 'per_apellidomat', 'per_ci', 'per_direccion', 'per_telefono', 'per_celular']);
+                $input = $request->only(['nombres', 'apellidopat', 'apellidomat', 'carnet', 'direccion', 'telefono', 'correo', 'fecha_nacimiento']);
 
-                $person = People::findOrFail($id);
-                $person->per_nombres = $input['per_nombres'];
-                $person->per_apellidopat = $input['per_apellidopat'];
-                $person->per_apellidomat = $input['per_apellidomat'];
-                $person->per_ci = $input['per_ci'];
-                $person->per_direccion = $input['per_direccion'];
-                $person->per_telefono = $input['per_telefono'];
-                $person->per_celular = $input['per_celular'];
-                $person->per_estado = $request->has('per_estado') ? 1 : 0;
-                $person->save();
+                $persona = Persona::findOrFail($id);
+                $persona->nombres = $input['nombres'];
+                $persona->apellidopat = $input['apellidopat'];
+                $persona->apellidomat = $input['apellidomat'];
+                $persona->carnet = $input['carnet'];
+                $persona->direccion = $input['direccion'];
+                $persona->telefono = $input['telefono'];
+                $persona->correo = $input['correo'];
+                $persona->fecha_nacimiento = $input['fecha_nacimiento'];
+                $persona->estado = $request->has('estado') ? 1 : 0;
+                $persona->save();
 
                 $output = [
                     'success' => true,
@@ -180,8 +180,8 @@ class PersonaController extends Controller
         }
         if (request()->ajax()) {
             try {
-                $person = People::findOrFail($id);
-                $person->delete();
+                $persona = Persona::findOrFail($id);
+                $persona->delete();
 
                 $output = [
                     'success' => true,
@@ -209,14 +209,14 @@ class PersonaController extends Controller
      */
     public function getPeopleData(Request $request)
     {
-        $people = People::where('per_estado', 1)
+        $persona = Persona::where('estado', 1)
             ->where(function ($query) use ($request) {
-                $query->where('per_ci', $request->term)
-                    ->orWhere('per_nombres', 'like', '%' . $request->term . '%')
-                    ->orWhere('per_apellidopat', 'like', '%' . $request->term . '%')
-                    ->orWhere('per_apellidomat', 'like', '%' . $request->term . '%');
+                $query->where('carnet', $request->term)
+                    ->orWhere('nombres', 'like', '%' . $request->term . '%')
+                    ->orWhere('apellidopat', 'like', '%' . $request->term . '%')
+                    ->orWhere('apellidomat', 'like', '%' . $request->term . '%');
             });
 
-        return $people->paginate(5, ['*'], 'page', $request->page);
+        return $persona->paginate(5, ['*'], 'page', $request->page);
     }
 }

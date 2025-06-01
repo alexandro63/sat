@@ -21,7 +21,7 @@ class SetSessionData
             $session_data = [
                 'user_id' => $user->id,
                 'user_name' => $user->user_name,
-                'user_names' => $user->people->per_nombres,
+                'user_names' => $user->persona->per_nombres,
             ];
 
             $request->session()->put('user', $session_data);

@@ -70,22 +70,22 @@
                         <div class="quick-actions-header">
                             <span class="title mb-1">Acciones rápidas</span>
                         </div>
-                        <div class="quick-actions-scroll scrollbar-outer">
+                        {{-- <div class="quick-actions-scroll scrollbar-outer">
                             <div class="quick-actions-items">
                                 <div class="row m-0">
-                                    <a class="col-6 col-md-4 p-0" href="{{ route('users.index') }}">
+                                    <a class="col-6 col-md-4 p-0" href="{{ route('uduarios.index') }}">
                                         <div class="quick-actions-item">
                                             <i class="flaticon-add-user"></i>
                                             <span class="text">Usuarios</span>
                                         </div>
                                     </a>
-                                    <a class="col-6 col-md-4 p-0" href="{{ route('student_enrollments.index') }}">
+                                    <a class="col-6 col-md-4 p-0" href="{{ route('estudiante.index') }}">
                                         <div class="quick-actions-item">
                                             <i class="flaticon-list"></i>
                                             <span class="text">Alumnos</span>
                                         </div>
                                     </a>
-                                    <a class="col-6 col-md-4 p-0" href="{{ route('teachers.index') }}">
+                                    <a class="col-6 col-md-4 p-0" href="{{ route('docente.index') }}">
                                         <div class="quick-actions-item">
                                             <i class="flaticon-pen"></i>
                                             <span class="text">Docentes</span>
@@ -113,7 +113,7 @@
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </li>
                 <li class="nav-item dropdown hidden-caret">

@@ -18,64 +18,69 @@
                 Actualiza todos los campos con (*) para editar este registro.
             </p>
 
-            <form action="{{ route('people.update', $person->per_id) }}" method="POST" id="edit_person">
+            <form action="{{ route('personas.update', $persona->id) }}" method="POST" id="edit_person">
                 @csrf
                 @method('PUT')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group form-group-default required">
                             <label>C.I</label>
-                            <input name="per_ci" type="text" class="form-control input-number"
-                                placeholder="Ingrese cédula de identidad" value="{{ $person->per_ci }}">
+                            <input name="carnet" type="text" class="form-control input-number"
+                                placeholder="Ingrese cédula de identidad" value="{{ $persona->carnet }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default required">
                             <label>Nombres</label>
-                            <input name="per_nombres" type="text" class="form-control" placeholder="Ingrese nombres"
-                                value="{{ $person->per_nombres }}">
+                            <input name="nombres" type="text" class="form-control" placeholder="Ingrese nombres"
+                                value="{{ $persona->nombres }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
                             <label>Primer Apellido</label>
-                            <input name="per_apellidopat" type="text" class="form-control"
-                                placeholder="Ingrese 1er apellido" value="{{ $person->per_apellidopat }}">
+                            <input name="apellidopat" type="text" class="form-control"
+                                placeholder="Ingrese 1er apellido" value="{{ $persona->apellidopat }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
                             <label>Segundo Apellido</label>
-                            <input name="per_apellidomat" type="text" class="form-control"
-                                placeholder="Ingrese 2do apellido" value="{{ $person->per_apellidomat }}">
+                            <input name="apellidomat" type="text" class="form-control"
+                                placeholder="Ingrese 2do apellido" value="{{ $persona->apellidomat }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
-                            <label>Celular</label>
-                            <input name="per_celular" type="text" class="form-control input-number" placeholder="Ingrese celular"
-                                value="{{ $person->per_celular }}">
+                            <label>Fecha de nacimiento</label>
+                            <input name="fecha_nacimiento" type="date" class="form-control" value="{{ $persona->fecha_nacimiento }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
-                            <label>Teléfono</label>
-                            <input name="per_telefono" type="text" class="form-control input-number"
-                                placeholder="Ingrese teléfono" value="{{ $person->per_telefono }}">
+                            <label>Telefono</label>
+                            <input name="telefono" type="text" class="form-control input-number"
+                                placeholder="Ingrese telefono" value="{{ $persona->telefono }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label>Correo</label>
+                            <input name="correo" type="email" class="form-control" placeholder="Ingrese correo" value="{{ $persona->correo }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
                             <label>Dirección</label>
-                            <input name="per_direccion" type="text" class="form-control"
-                                placeholder="Ingrese dirección" value="{{ $person->per_direccion }}">
+                            <input name="direccion" type="text" class="form-control"
+                                placeholder="Ingrese dirección" value="{{ $persona->direccion }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="" name="per_estado"
-                                    {{ $person->per_estado == 1 ? 'checked' : '' }}>
+                                <input class="form-check-input" type="checkbox" value="" name="estado"
+                                    {{ $persona->estado == 1 ? 'checked' : '' }}>
                                 <span class="form-check-sign">Habilitado</span>
                             </label>
                         </div>

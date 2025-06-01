@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('table_plantel_academico', function (Blueprint $table) {
+        Schema::create('plantel_administrativo', function (Blueprint $table) {
             $table->id();
             $table->foreignId('per_id')->constrained('persona')->onDelete('cascade');
             $table->string('cargo');
             $table->string('unidad');
+            $table->boolean('estado')->default(1);
             $table->timestamps();
         });
     }

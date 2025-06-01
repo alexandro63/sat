@@ -18,53 +18,59 @@
                 Llena todos los campos para crear un nuevo registro.
             </p>
 
-            <form action="{{ route('people.store') }}" method="POST" id="add_person">
+            <form action="{{ route('personas.store') }}" method="POST" id="add_person">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group form-group-default required">
                             <label>C.I</label>
-                            <input name="per_ci" type="text" class="form-control input-number"
+                            <input name="carnet" type="text" class="form-control input-number"
                                 placeholder="Ingrese cédula de identidad">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default required">
                             <label>Nombres</label>
-                            <input name="per_nombres" type="text" class="form-control" placeholder="Ingrese nombres">
+                            <input name="nombres" type="text" class="form-control" placeholder="Ingrese nombres">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
                             <label>Primer Apellido</label>
-                            <input name="per_apellidopat" type="text" class="form-control"
+                            <input name="apellidopat" type="text" class="form-control"
                                 placeholder="Ingrese 1er apellido">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
                             <label>Segundo Apellido</label>
-                            <input name="per_apellidomat" type="text" class="form-control"
+                            <input name="apellidomat" type="text" class="form-control"
                                 placeholder="Ingrese 2do apellido">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
-                            <label>Celular</label>
-                            <input name="per_celular" type="text" class="form-control input-number" placeholder="Ingrese celular">
+                            <label>Fecha de nacimiento</label>
+                            <input name="fecha_nacimiento" type="date" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
-                            <label>Teléfono</label>
-                            <input name="per_telefono" type="text" class="form-control input-number"
-                                placeholder="Ingrese teléfono">
+                            <label>Telefono</label>
+                            <input name="telefono" type="text" class="form-control input-number"
+                                placeholder="Ingrese telefono">
                         </div>
                     </div>
-                    <div class="col-md-6 ">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label>Correo</label>
+                            <input name="correo" type="email" class="form-control" placeholder="Ingrese correo">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group form-group-default">
                             <label>Dirección</label>
-                            <input name="per_direccion" type="textare" class="form-control " rows="3"
+                            <input name="direccion" type="text" class="form-control"
                                 placeholder="Ingrese dirección">
                         </div>
                     </div>

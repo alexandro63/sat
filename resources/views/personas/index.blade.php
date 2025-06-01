@@ -12,7 +12,7 @@
                             <h4 class="card-title">Lista de Personas</h4>
                             @can('persona.create')
                                 <button class="btn btn-primary btn-round ml-auto btn-modal"
-                                    data-href="{{ route('people.create') }}" data-container=".modal_person">
+                                    data-href="{{ route('personas.create') }}" data-container=".modal_person">
                                     <i class="fa fa-plus"></i>
                                     Registrar
                                 </button>
@@ -46,5 +46,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/app/people.js') }}"></script>
+    <script src="{{ asset('js/app/persona.js') }}"></script>
 @endpush
