@@ -59,22 +59,22 @@ class PermissionsTableSeeder extends Seeder
                 'docente.delete',
             ],
 
-            // ==== PLANIFICACIÓN ACADÉMICA ====
-            'planificacion_academica' => [
-                'plan_academico.index',
-                'plan_academico.view',
-                'plan_academico.create',
-                'plan_academico.update',
-                'plan_academico.delete',
+            // ==== PROGRAMA ACADÉMICO ====
+            'programa_academico' => [
+                'programa_academico.index',
+                'programa_academico.view',
+                'programa_academico.create',
+                'programa_academico.update',
+                'programa_academico.delete',
             ],
 
-            // ==== ALUMNOS – INSCRIPCIONES ====
-            'alumno_inscripcion' => [
-                'alumno_inscripcion.index',
-                'alumno_inscripcion.view',
-                'alumno_inscripcion.create',
-                'alumno_inscripcion.update',
-                'alumno_inscripcion.delete',
+            // ==== ESTUDIANTE ====
+            'estudiante' => [
+                'estudiante.index',
+                'estudiante.view',
+                'estudiante.create',
+                'estudiante.update',
+                'estudiante.delete',
             ],
 
             // ==== OTROS INGRESOS ====

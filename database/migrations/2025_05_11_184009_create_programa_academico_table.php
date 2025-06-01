@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('modalidad');
             $table->string('facultad');
             $table->string('nivel');
-            $table->string('estado')->nullable();
+            $table->boolean('estado')->default(0);
             $table->timestamps();
         });
     }

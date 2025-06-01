@@ -100,6 +100,12 @@ return [
                 'permission' => 'docente.index',
             ],
 
+            [
+                'route' => 'programa-academico.index',
+                'title' => 'Programa Académico',
+                'permission' => 'programa_academico.index',
+            ],
+
         ],
 
         // 'modules' => [
