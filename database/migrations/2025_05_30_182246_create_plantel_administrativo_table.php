@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('per_id')->constrained('persona')->onDelete('cascade');
             $table->string('cargo');
             $table->string('unidad');
-            $table->boolean('estado')->default(1);
+            $table->boolean('estado')->default(0);
             $table->timestamps();
         });
     }

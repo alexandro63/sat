@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\UtilHelper;
-use App\Models\Teacher;
+use App\Models\Docente;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Log;
@@ -19,11 +18,11 @@ class DocenteController extends Controller
             abort(403, 'Unauthorized action.');
         }
         if (request()->ajax()) {
-            $teachers = Teacher::with('people')->select(['doc_id', 'doc_per_id','doc_grado_academico'])->orderBy('doc_id', 'desc');
-            return DataTables::of($teachers)
+            $docentes = Docente::with('persona')->select(['id', 'per_id', 'numero_item', 'especialidad', 'estado'])->orderBy('id', 'desc');
+            return DataTables::of($docentes)
                 ->addColumn('action', function ($row) {
-                    $editUrl = route('teachers.edit', $row->doc_id);
-                    $deleteUrl = route('teachers.destroy', $row->doc_id);
+                    $editUrl = route('docentes.edit', $row->id);
+                    $deleteUrl = route('docentes.destroy', $row->id);
 
                     $canEdit = auth()->user()->can('docente.update');
                     $canDelete = auth()->user()->can('docente.delete');
@@ -46,14 +45,20 @@ class DocenteController extends Controller
 
                     return $buttons;
                 })
+                ->editColumn('numero_item', function ($row) {
+                    return $row->numero_item;
+                })
                 ->addColumn('documento', function ($row) {
-                    return $row->people->per_ci;
+                    return $row->persona->carnet;
                 })
                 ->addColumn('docente', function ($row) {
-                    return $row->people->per_apellidopat . ' ' . $row->people->per_apellidomat . ' ' . $row->people->per_nombres;
+                    return $row->persona->apellidopat . ' ' . $row->persona->apellidomat . ' ' . $row->persona->nombres;
                 })
-                ->addColumn('profesion',function($row){
-                    return $row->doc_grado_academico;
+                ->editColumn('especialidad', function ($row) {
+                    return $row->especialidad;
+                })
+                ->editColumn('estado', function ($row) {
+                    return $row->estado ? 'Sí' : 'No';
                 })
                 ->removeColumn(['doc_id'])
                 ->rawColumns(['action'])
@@ -71,8 +76,7 @@ class DocenteController extends Controller
         if (! auth()->user()->can('docente.create')) {
             abort(403, 'Unauthorized action.');
         }
-        $grade_academic = UtilHelper::getGradeAcademic();
-        return view('docentes.create', compact('grade_academic'));
+        return view('docentes.create');
     }
 
     /**
@@ -83,14 +87,13 @@ class DocenteController extends Controller
         if (! auth()->user()->can('docente.create')) {
             abort(403, 'Unauthorized action.');
         }
-        $status = $request->has('doc_estado') ? 1 : 0;
         try {
-            $input = $request->only(['doc_per_id', 'doc_grado_academico','doc_observaciones', 'doc_fec_ing']);
-            $teacher  = Teacher::create($input);
+            $input = $request->only(['per_id', 'numero_item', 'especialidad', 'tipo_contrato']);
+            $status = $request->has('estado') ? 1 : 0;
+            Docente::create($input);
 
             $output = [
                 'success' => true,
-                'data'    => $teacher,
                 'msg'     => __('messages.add_success'),
             ];
         } catch (\Exception $e) {
@@ -128,9 +131,8 @@ class DocenteController extends Controller
             abort(403, 'Unauthorized action.');
         }
         if (request()->ajax()) {
-            $teacher = Teacher::find($id);
-            $grade_academic = UtilHelper::getGradeAcademic();
-            return view('docentes/edit', compact('teacher', 'grade_academic'));
+            $docente = Docente::find($id);
+            return view('docentes/edit', compact('docente'));
         }
     }
 
@@ -146,14 +148,15 @@ class DocenteController extends Controller
 
         if (request()->ajax()) {
             try {
-                $input = $request->only(['doc_per_id', 'doc_grado_academico', 'doc_observaciones', 'doc_fec_ing']);
+                $input = $request->only(['per_id', 'numero_item', 'especialidad', 'tipo_contrato']);
 
-                $teacher = Teacher::findOrFail($id);
-                $teacher->doc_per_id = $input['doc_per_id'];
-                $teacher->doc_grado_academico = $input['doc_grado_academico'];
-                $teacher->doc_observaciones = $input['doc_observaciones'];
-                $teacher->doc_fec_ing = $input['doc_fec_ing'];
-                $teacher->save();
+                $docente = Docente::findOrFail($id);
+                $docente->per_id = $input['per_id'];
+                $docente->numero_item = $input['numero_item'];
+                $docente->especialidad = $input['especialidad'];
+                $docente->tipo_contrato = $input['tipo_contrato'];
+                $docente->estado = $request->has('estado') ? 1 : 0;
+                $docente->save();
 
                 $output = [
                     'success' => true,
@@ -186,8 +189,8 @@ class DocenteController extends Controller
         }
         if (request()->ajax()) {
             try {
-                $teacher = Teacher::findOrFail($id);
-                $teacher->delete();
+                $docente = Docente::findOrFail($id);
+                $docente->delete();
 
                 $output = [
                     'success' => true,
@@ -215,13 +218,13 @@ class DocenteController extends Controller
         $term = $request->input('term');
         $page = $request->input('page', 1);
 
-        $teachers = Teacher::whereHas('people', function ($query) use ($term) {
-            $query->where('per_ci', $term)
-                ->orWhere('per_nombres', 'like', '%' . $term . '%')
-                ->orWhere('per_apellidopat', 'like', '%' . $term . '%')
-                ->orWhere('per_apellidomat', 'like', '%' . $term . '%');
+        $docentes = Docente::whereHas('persona', function ($query) use ($term) {
+            $query->where('carnet', $term)
+                ->orWhere('nombres', 'like', '%' . $term . '%')
+                ->orWhere('apellidopat', 'like', '%' . $term . '%')
+                ->orWhere('apellidomat', 'like', '%' . $term . '%');
         });
 
-        return $teachers->with('people')->paginate(5, ['*'], 'page', $page);
+        return $docentes->with('people')->paginate(5, ['*'], 'page', $page);
     }
 }

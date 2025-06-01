@@ -3,13 +3,15 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         ajax: {
-            url: "teachers",
+            url: "docentes",
             type: "GET",
         },
         columns: [
+            { data: "numero_item" },
             { data: "documento" },
             { data: "docente" },
-            { data: "profesion" },
+            { data: "especialidad" },
+            { data: "estado" },
             { data: "action", orderable: false, searchable: false },
         ],
     });
@@ -28,7 +30,7 @@ $(document).ready(function () {
     });
 
     $("div.modal_teacher").on("shown.bs.modal", function () {
-        const $select = $("#doc_per_id");
+        const $select = $("#per_id");
 
         if (!$select.hasClass("select2-hidden-accessible")) {
             $select.select2({
@@ -38,7 +40,7 @@ $(document).ready(function () {
                 allowClear: true,
                 minimumInputLength: 1,
                 ajax: {
-                    url: "/administration/get-people",
+                    url: "/administracion/get-personas",
                     type: "GET",
                     dataType: "json",
                     delay: 250,
@@ -49,8 +51,8 @@ $(document).ready(function () {
                     processResults: function (data, params) {
                         params.page = params.page || 1;
                         const formatted = data.data.map((item) => ({
-                            id: item.per_id,
-                            text: `(C.I. ${item.per_ci}) ${item.per_nombres} ${item.per_apellidopat} ${item.per_apellidomat}`,
+                            id: item.id,
+                            text: `(C.I. ${item.carnet}) ${item.nombres} ${item.apellidopat} ${item.apellidomat}`,
                         }));
                         return {
                             results: formatted,

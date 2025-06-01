@@ -11,6 +11,6 @@ class Docente extends Model
 
     public function persona()
     {
-        return $this->belongsTo(Persona::class, 'id_docente');
+        return $this->belongsTo(Persona::class, 'per_id');
     }
 }

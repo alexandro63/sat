@@ -18,50 +18,51 @@
                 Llena todos los campos con (*) para crear un nuevo registro.
             </p>
 
-            <form action="{{ route('teachers.update', $teacher->doc_id) }}" method="POST" id="edit_teacher">
+            <form action="{{ route('docentes.update', $docente->id) }}" method="POST" id="edit_teacher">
                 @csrf
                 @method('PUT')
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group form-group-default required">
                             <label for="doc_per_id">C.I.</label>
-                            <select class="form-control" name="doc_per_id" id="doc_per_id">
-                                @if (!empty($teacher->doc_per_id))
-                                    <option value="{{ $teacher->doc_per_id }}" selected>
-                                        (C.I. {{ $teacher->people->per_ci }})
-                                        {{ $teacher->people->per_nombres }} {{ $teacher->people->per_apellidopat }}
-                                        {{ $teacher->people->per_apellidomat }}
+                            <select class="form-control" name="per_id" id="per_id">
+                                @if (!empty($docente->per_id))
+                                    <option value="{{ $docente->per_id }}" selected>
+                                        (C.I. {{ $docente->persona->carnet }}) {{ $docente->persona->nombres }} {{ $docente->persona->apellidopat }} {{ $docente->persona->apellidomat }}
                                     </option>
                                 @endif
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-md-6">
                         <div class="form-group form-group-default required">
-                            <label for="doc_grado_academico">Grado Acádemico</label>
-                            <select class="form-control select2" name="doc_grado_academico" id="doc_grado_academico">
-                                <option value="" disabled selected>Seleccionar</option>
-                                @foreach ($grade_academic as $key => $grade)
-                                    <option value="{{ $key }}"
-                                        {{ $teacher->doc_grado_academico == $key ? 'selected' : '' }}>
-                                        {{ $grade }}
-                                    </option>
-                                @endforeach
+                            <label form="numero_item">N° de Item</label>
+                            <input name="numero_item" type="text" class="form-control" id="numero_item"
+                                placeholder="Ingrese nº item" value="{{ $docente->numero_item }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <label form="especialidad">Especialidad</label>
+                            <input name="especialidad" type="text" class="form-control" id="especialidad"
+                                placeholder="Ingrese especialidad" value="{{ $docente->especialidad }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <label form="tipo_contrato">Tipo de contrato</label>
+                            <input name="tipo_contrato" type="text" class="form-control" id="tipo_contrato"
+                                placeholder="Ingrese tipo de contrato" value="{{ $docente->tipo_contrato }}">
+                        </div>
+                    </div>
 
-                            </select>
-                        </div>
-                    </div>
                     <div class="col-md-6">
-                        <div class="form-group form-group-default required">
-                            <label form="doc_fec_ing">Fecha de Ingreso</label>
-                            <input name="doc_fec_ing" type="date" class="form-control" id="doc_fec_ing"
-                                value="{{ $teacher->doc_fec_ing }}">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default">
-                            <label for="doc_observaciones">Observaciones</label>
-                            <textarea class="form-control" placeholder="Ingrese observaciones" name="doc_observaciones" id="doc_observaciones">{{ $teacher->doc_observaciones }}</textarea>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" {{ $docente->estado ? 'checked' : '' }}
+                                    name="estado">
+                                <span class="form-check-sign">Habilitado?</span>
+                            </label>
                         </div>
                     </div>
                 </div>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('programa_academico')->constrained('programa_academico')->onDelete('cascade');
             $table->string('numero_matricula');
             $table->date('fecha_inscripcion');
-            $table->boolean('estado')->default(1);
+            $table->boolean('estado')->default(0);
             $table->timestamps();
         });
     }

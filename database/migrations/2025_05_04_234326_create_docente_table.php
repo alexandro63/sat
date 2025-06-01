@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('numero_item');
             $table->string('especialidad');
             $table->string('tipo_contrato');
-            $table->boolean('estado')->default(1);
+            $table->boolean('estado')->default(0);
             $table->timestamps();
         });
     }
