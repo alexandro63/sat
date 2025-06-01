@@ -60,7 +60,7 @@ class DocenteController extends Controller
                 ->editColumn('estado', function ($row) {
                     return $row->estado ? 'Sí' : 'No';
                 })
-                ->removeColumn(['doc_id'])
+                ->removeColumn(['id'])
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -90,6 +90,7 @@ class DocenteController extends Controller
         try {
             $input = $request->only(['per_id', 'numero_item', 'especialidad', 'tipo_contrato']);
             $status = $request->has('estado') ? 1 : 0;
+            $input['estado'] = $status;
             Docente::create($input);
 
             $output = [
@@ -220,11 +221,12 @@ class DocenteController extends Controller
 
         $docentes = Docente::whereHas('persona', function ($query) use ($term) {
             $query->where('carnet', $term)
+                ->orWhere('estado', 1)
                 ->orWhere('nombres', 'like', '%' . $term . '%')
                 ->orWhere('apellidopat', 'like', '%' . $term . '%')
                 ->orWhere('apellidomat', 'like', '%' . $term . '%');
         });
 
-        return $docentes->with('people')->paginate(5, ['*'], 'page', $page);
+        return $docentes->with('persona')->paginate(5, ['*'], 'page', $page);
     }
 }

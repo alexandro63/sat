@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group form-group-default required">
-                            <label for="doc_per_id">C.I.</label>
+                            <label for="per_id">C.I.</label>
                             <select class="form-control" name="per_id" id="per_id" style="width: 100%">
                             </select>
                         </div>

@@ -89,6 +89,12 @@ return [
 
         'registros' => [
             [
+                'route' => 'plantel-administrativo.index',
+                'title' => 'Plantel Administrativo',
+                'permission' => 'plantel_administrativo.index',
+            ],
+
+            [
                 'route' => 'docentes.index',
                 'title' => 'Docentes',
                 'permission' => 'docente.index',

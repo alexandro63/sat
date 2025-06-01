@@ -54,7 +54,7 @@ Route::middleware(['atlantis_menu', 'set_session_data', 'check_user_login', 'aut
         Route::get('get-docentes', [DocenteController::class, 'getDocentesData']);
         // Plantel Administrativo
         Route::resource('plantel-administrativo', PlantelAdministrativoController::class);
-        Route::get('get-plantel', [PlantelAdministrativoController::class, 'getPlantelAdministrativoData']);
+        Route::post('get-plantel', [PlantelAdministrativoController::class, 'getPlantelAdministrativoData']);
         // Programa Academico
         Route::resource('programa-academico', ProgramaAcademicoController::class);
         Route::get('get-programa-academico', [ProgramaAcademicoController::class, 'getProgramaAcademicoData']);

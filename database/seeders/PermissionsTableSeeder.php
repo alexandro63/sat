@@ -41,55 +41,13 @@ class PermissionsTableSeeder extends Seeder
                 'usuario.delete',
             ],
 
-            // ==== GRUPOS DE USUARIO ====
-            'grupos' => [
-                'grupo_usuario.index',
-                'grupo_usuario.create',
-                'grupo_usuario.update',
-                'grupo_usuario.delete',
-            ],
-
-            // ==== RELACIÓN USUARIO⇄GRUPO ====
-            'asignaciones_grupo' => [
-                'ag_grupo_usuario.index',
-                'ag_grupo_usuario.view',
-                'ag_grupo_usuario.create',
-                'ag_grupo_usuario.update',
-                'ag_grupo_usuario.delete',
-            ],
-
-            // ==== AMBIENTES ====
-            'ambientes' => [
-                'ambiente.index',
-                'ambiente.create',
-                'ambiente.update',
-                'ambiente.delete',
-            ],
-
-            // ==== CARRERAS ====
-            'carreras' => [
-                'carrera.index',
-                'carrera.create',
-                'carrera.update',
-                'carrera.delete',
-            ],
-
-            // ==== MATERIAS ====
-            'materias' => [
-                'materia.index',
-                'materia.view',
-                'materia.create',
-                'materia.update',
-                'materia.delete',
-            ],
-
-            // ==== ADMINISTRATIVO ====
-            'administrativo' => [
-                'administrativo.index',
-                'administrativo.view',
-                'administrativo.create',
-                'administrativo.update',
-                'administrativo.delete',
+            // ==== PLANTEL ADMINISTRATIVO ====
+            'plantel_administrativo' => [
+                'plantel_administrativo.index',
+                'plantel_administrativo.view',
+                'plantel_administrativo.create',
+                'plantel_administrativo.update',
+                'plantel_administrativo.delete',
             ],
 
             // ==== DOCENTES ====
