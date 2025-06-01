@@ -24,13 +24,8 @@ class Estudiante extends Model
         return $this->belongsTo(Persona::class, 'per_id');
     }
 
-
-    public static function shifts()
+    public function programaAcademico()
     {
-        return [
-            'mañana' => 'Mañana',
-            'tarde' => 'Tarde',
-            'noche' => 'Noche'
-        ];
+        return $this->belongsTo(ProgramaAcademico::class, 'id_programa_academico');
     }
 }

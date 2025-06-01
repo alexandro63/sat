@@ -16,6 +16,7 @@ use App\Http\Controllers\MetodologiaController;
 use App\Http\Controllers\ModuloController;
 use App\Http\Controllers\ObservacionController;
 use App\Http\Controllers\PagoController;
+use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TallerController;
@@ -62,8 +63,8 @@ Route::middleware(['atlantis_menu', 'set_session_data', 'check_user_login', 'aut
         Route::resource('estudiantes', EstudianteController::class);
         Route::get('get-estudiantes', [EstudianteController::class, 'getEstudiantesData']);
         // Proyecto
-        Route::resource('proyectos', EstudianteController::class);
-        Route::get('get-proyectos', [EstudianteController::class, 'getProyectosData']);
+        Route::resource('proyectos', ProyectoController::class);
+        Route::get('get-proyectos', [ProyectoController::class, 'getProyectosData']);
         // Metodologia
         Route::resource('metodologias', MetodologiaController::class);
         Route::get('get-metodologias', [MetodologiaController::class, 'getProyectosData']);

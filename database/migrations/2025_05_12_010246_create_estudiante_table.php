@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('estudiante', function (Blueprint $table) {
             $table->id();
             $table->foreignId('per_id')->constrained('persona')->onDelete('cascade');
-            $table->foreignId('programa_academico')->constrained('programa_academico')->onDelete('cascade');
+            $table->foreignId('id_programa_academico')->constrained('programa_academico')->onDelete('cascade');
             $table->string('numero_matricula');
             $table->date('fecha_inscripcion');
             $table->boolean('estado')->default(0);

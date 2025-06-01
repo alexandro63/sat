@@ -106,6 +106,18 @@ return [
                 'permission' => 'programa_academico.index',
             ],
 
+            [
+                'route' => 'estudiantes.index',
+                'title' => 'Estudiantes',
+                'permission' => 'estudiantes.index',
+            ],
+
+            [
+                'route' => 'proyectos.index',
+                'title' => 'Proyectos',
+                'permission' => 'proyectos.index',
+            ],
+
         ],
 
         // 'modules' => [

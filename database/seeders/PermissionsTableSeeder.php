@@ -77,13 +77,14 @@ class PermissionsTableSeeder extends Seeder
                 'estudiante.delete',
             ],
 
-            // ==== OTROS INGRESOS ====
-            'otros_ingresos' => [
-                'otros_ingresos.index',
-                'otros_ingresos.view',
-                'otros_ingresos.create',
-                'otros_ingresos.update',
-                'otros_ingresos.delete',
+            // ==== PROYECTO ====
+            'proyecto' => [
+                'proyecto.index',
+                'proyecto.view',
+                'proyecto.revision',
+                'proyecto.create',
+                'proyecto.update',
+                'proyecto.delete',
             ],
 
             // ==== AJUSTE DOCENTE ====
