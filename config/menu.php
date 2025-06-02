@@ -23,7 +23,7 @@ return [
             'icon'     => 'fas fa-users',
             'children' => 'administracion',
             'isActive' => 'administracion.*',
-            'permission' => ['permiso.index', 'persona.index', 'usuario.index', 'grupo_usuario.index', 'ag_grupo_usuario.index'],
+            'permission' => ['permiso.index', 'persona.index', 'usuario.index'],
         ],
 
         [
@@ -32,7 +32,7 @@ return [
             'icon'     => 'fas fa-file-signature',
             'children' => 'registros',
             'isActive' => 'registros.*',
-            'permission' => ['ambiente.index', 'carrera.index', 'materia.index', 'administrativo.index', 'docente.index', 'plan_academico.index', 'alumno_inscripcion.index', 'otros_ingresos.index', 'ajuste_docente.index'],
+            'permission' => ['plantel_administrativo.index', 'docente.index','programa_academico.index','estudiantes.index','proyectos.index','metodologia.index','modulo.index','pago.index','taller.index','avance-estudiante.index'],
         ],
 
         [

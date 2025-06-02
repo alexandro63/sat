@@ -18,7 +18,7 @@ class ProyectoController extends Controller
             abort(403, 'Unauthorized action.');
         }
         if (request()->ajax()) {
-            $proyectos = Proyecto::with(['docenteGuia', 'docenteRevisor', 'estudiante'])->select(['id', 'id_docente_revisor', 'id_docente_guia', 'id_estudiante', 'titulo', 'linea_investigacion'])->orderBy('id', 'desc');
+            $proyectos = Proyecto::with(['docenteGuia', 'docenteRevisor', 'estudiante'])->select(['id', 'id_docente_revisor', 'id_docente_guia', 'id_estudiante', 'titulo', 'linea_investigacion','area_conocimiento'])->orderBy('id', 'desc');
             return DataTables::of($proyectos)
                 ->addColumn('action', function ($row) {
                     $editUrl = route('proyectos.edit', $row->id);

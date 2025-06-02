@@ -105,7 +105,4 @@ Route::middleware(['atlantis_menu', 'set_session_data', 'check_user_login', 'aut
     //     Route::get('trabajo-dirijido', [ModuleController::class, 'trabajoDirijido'])->name('trabajo_dirijido.index');
     //     Route::get('graduacion-excelencia', [ModuleController::class, 'graduacionExcelencia'])->name('graduacion_excelencia.index');
     // });
-
-    /**Settings System */
-    Route::get('settings-system', [SettingController::class, 'index'])->name('settings');
 });

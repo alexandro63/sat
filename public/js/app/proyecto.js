@@ -12,6 +12,7 @@ $(document).ready(function () {
             { data: "estudiante" },
             { data: "titulo" },
             { data: "linea_investigacion" },
+            { data: "area_conocimiento" },
             { data: "action", orderable: false, searchable: false },
         ],
     });
