@@ -6,7 +6,7 @@
                     Revison de
                 </span>
                 <span class="fw-light">
-                    Proyecto
+                    Proyecto (Estudiante: {{$proyecto->estudiante->persona->nombres}} {{$proyecto->estudiante->persona->apellidopat}} {{$proyecto->estudiante->persona->apellidopat}})
                 </span>
             </h3>
             <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">

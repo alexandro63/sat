@@ -87,40 +87,52 @@ class PermissionsTableSeeder extends Seeder
                 'proyecto.delete',
             ],
 
-            // ==== AJUSTE DOCENTE ====
-            'ajuste_docentes' => [
-                'ajuste_docente.index',
-                'ajuste_docente.view',
-                'ajuste_docente.create',
-                'ajuste_docente.update',
-                'ajuste_docente.delete',
+            // ==== METODOLOGIA ====
+            'metodologia' => [
+                'metodologia.index',
+                'metodologia.view',
+                'metodologia.create',
+                'metodologia.update',
+                'metodologia.delete',
             ],
 
 
-            // === MODULOS ===
-            'modulos' => [
-                'tesis.index',
-                'graduacion_excelencia.index',
-                'proyecto_grado.index',
-                'trabajo_dirijido.index',
+            // ==== MODULO ====
+            'modulo' => [
+                'modulo.index',
+                'modulo.view',
+                'modulo.create',
+                'modulo.update',
+                'modulo.delete',
             ],
 
-            //=== REPORTES ===
-            'reportes' => [
+            // ==== PAGO ====
+            'pago' => [
+                'pago.index',
+                'pago.view',
+                'pago.create',
+                'pago.update',
+                'pago.delete',
+            ],
+
+            // ==== TALLER ====
+            'taller' => [
+                'taller.index',
+                'taller.view',
+                'taller.create',
+                'taller.update',
+                'taller.delete',
+            ],
+
+            // ==== AVANCE ESTUDIANTE ====
+            'avance_estudiante' => [
                 'avance_estudiante.index',
-                'entregas_avance.index'
+                'avance_estudiante.view',
+                'avance_estudiante.create',
+                'avance_estudiante.update',
+                'avance_estudiante.delete',
             ],
 
-            //=== ASISTENCIAS ===
-            'asistencias' => [
-                'asistencias.docente',
-                'asistencias.modificador'
-            ],
-
-            //=== CONFIGURACIÓN ===
-            'configuraciones' => [
-                'configuracion.index',
-            ]
         ];
 
 

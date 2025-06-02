@@ -70,7 +70,7 @@ Route::middleware(['atlantis_menu', 'set_session_data', 'check_user_login', 'aut
         Route::get('get-proyectos', [ProyectoController::class, 'getProyectosData']);
         // Metodologia
         Route::resource('metodologias', MetodologiaController::class);
-        Route::get('get-metodologias', [MetodologiaController::class, 'getProyectosData']);
+        Route::get('get-metodologias', [MetodologiaController::class, 'getMetodologiasData']);
         // Modulo
         Route::resource('modulos', ModuloController::class);
         Route::get('get-modulos', [ModuloController::class, 'getModulosData']);

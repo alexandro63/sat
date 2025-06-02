@@ -118,6 +118,36 @@ return [
                 'permission' => 'proyectos.index',
             ],
 
+            [
+                'route' => 'metodologias.index',
+                'title' => 'Metodologías',
+                'permission' => 'metodologia.index',
+            ],
+
+            [
+                'route' => 'modulos.index',
+                'title' => 'Modulo',
+                'permission' => 'modulo.index',
+            ],
+
+            [
+                'route' => 'pagos.index',
+                'title' => 'Pagos',
+                'permission' => 'pago.index',
+            ],
+
+            [
+                'route' => 'talleres.index',
+                'title' => 'Talleres',
+                'permission' => 'taller.index',
+            ],
+
+            [
+                'route' => 'avance-estudiante.index',
+                'title' => 'Avance Estudiante',
+                'permission' => 'avance-estudiante.index',
+            ],
+
         ],
 
         // 'modules' => [
