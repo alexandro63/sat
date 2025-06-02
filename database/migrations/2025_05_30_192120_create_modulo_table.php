@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('id_docente')->constrained('docente')->onDelete('cascade');
             $table->foreignId('id_metodologia')->constrained('metodologia')->onDelete('cascade');
             $table->string('duracion');
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable();
             $table->date('fecha_inicio');
             $table->date('fecha_finalizacion');
             $table->timestamps();
