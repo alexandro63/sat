@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('linea_investigacion');
             $table->string('area_conocimiento');
-            $table->decimal('calificacion')->default(0);
+            $table->string('calificacion')->nullable();
             $table->date('fecha_entrega')->nullable();
             $table->date('fecha_defensa')->nullable();
             $table->text('resumen')->nullable();

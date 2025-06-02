@@ -64,6 +64,9 @@ Route::middleware(['atlantis_menu', 'set_session_data', 'check_user_login', 'aut
         Route::get('get-estudiantes', [EstudianteController::class, 'getEstudiantesData']);
         // Proyecto
         Route::resource('proyectos', ProyectoController::class);
+        Route::get('proyecto-revision/{id}', [ProyectoController::class, 'revision'])->name('proyecto.revision');
+        Route::post('proyecto-revision/{id}', [ProyectoController::class, 'revisionUpdate'])->name('proyecto.revision.update');
+
         Route::get('get-proyectos', [ProyectoController::class, 'getProyectosData']);
         // Metodologia
         Route::resource('metodologias', MetodologiaController::class);

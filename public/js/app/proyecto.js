@@ -53,7 +53,7 @@ $(document).ready(function () {
                         params.page = params.page || 1;
                         const formatted = data.data.map((item) => ({
                             id: item.id,
-                            text: `(C.I. ${item.carnet}) ${item.nombres} ${item.apellidopat} ${item.apellidomat}`,
+                            text: `(C.I. ${item.persona.carnet}) ${item.persona.nombres} ${item.persona.apellidopat} ${item.persona.apellidomat}`,
                         }));
                         return {
                             results: formatted,
@@ -99,7 +99,7 @@ $(document).ready(function () {
                         params.page = params.page || 1;
                         const formatted = data.data.map((item) => ({
                             id: item.id,
-                            text: `(C.I. ${item.carnet}) ${item.nombres} ${item.apellidopat} ${item.apellidomat}`,
+                            text: `(C.I. ${item.persona.carnet}) ${item.persona.nombres} ${item.persona.apellidopat} ${item.persona.apellidomat}`,
                         }));
                         return {
                             results: formatted,
@@ -145,7 +145,7 @@ $(document).ready(function () {
                         params.page = params.page || 1;
                         const formatted = data.data.map((item) => ({
                             id: item.id,
-                            text: `(C.I. ${item.carnet}) ${item.nombres} ${item.apellidopat} ${item.apellidomat}`,
+                            text: `(C.I. ${item.persona.carnet}) ${item.persona.nombres} ${item.persona.apellidopat} ${item.persona.apellidomat}`,
                         }));
                         return {
                             results: formatted,
@@ -172,5 +172,121 @@ $(document).ready(function () {
             }
         }
 
+    });
+
+    $(document).on("click", "button.revision_proyecto", function () {
+        $("div.modal_proyecto").load($(this).data("href"), function () {
+            $(this).modal("show");
+
+            $("form#revision_proyecto").submit(function (e) {
+                e.preventDefault();
+                var $form = $(this),
+                    valid = true;
+
+                $form
+                    .find(".form-group.required")
+                    .removeClass("has-error")
+                    .find(".help-block")
+                    .hide();
+
+                $form.find(".required :input").each(function () {
+                    const $input = $(this);
+                    const tag = $input.prop("tagName").toLowerCase();
+                    const type = $input.attr("type");
+
+                    let value = $input.val();
+                    let inputValid = true;
+
+                    if (Array.isArray(value)) {
+                        value = value.length ? value.join(",") : "";
+                    }
+
+                    if (tag === "select") {
+                        if (!value || value === "") {
+                            inputValid = false;
+                        }
+                    } else if (
+                        type === "text" ||
+                        type === "date" ||
+                        type === undefined
+                    ) {
+                        if (!value || value.toString().trim() === "") {
+                            inputValid = false;
+                        }
+                    }
+
+                    const $grp = $input.closest(".form-group");
+                    if (!inputValid) {
+                        $grp.addClass("has-error").find(".help-block").show();
+                        valid = false;
+                    } else {
+                        $grp.removeClass("has-error")
+                            .find(".help-block")
+                            .hide();
+                    }
+                });
+
+                if (!valid) {
+                    notify(
+                        "warning",
+                        "Por favor, llene los campos requeridos."
+                    );
+                    return;
+                }
+
+                $.ajax({
+                    method: "POST",
+                    url: $(this).attr("action"),
+                    dataType: "json",
+                    data: $form.serialize(),
+                    beforeSend: function () {
+                        __disable_submit_button(
+                            $form.find('button[type="submit"]')
+                        );
+                    },
+                    success: function (res) {
+                        if (res.success) {
+                            $("div.modal_proyecto").modal("hide");
+                            notify("success", res.msg);
+                            proyectoTable.ajax.reload();
+                        } else {
+                            notify("error", res.msg);
+                        }
+                    },
+                    error: function (xhr) {
+                        var listMsg =
+                            "<strong>Corrige los siguientes campos:</strong><ul>";
+                        var errors = xhr.responseJSON.errors;
+                        console.log(errors)
+                        var $submitBtn = $form.find('button[type="submit"]');
+                        $submitBtn.removeAttr("disabled");
+                        $submitBtn.html("Actualizar");
+                        $form
+                            .find(".form-group")
+                            .removeClass("has-error")
+                            .find(".help-block");
+                        $.each(errors, function (field, messages) {
+                            var $field = $form.find('[name="' + field + '"]');
+
+                            $field
+                                .closest(".form-group")
+                                .addClass("has-error")
+                                .find(".help-block")
+                                .show();
+
+                            listMsg += `<li>${messages}</li>`;
+                        });
+                        listMsg += "</ul>";
+                        notify("warning", listMsg, 2000);
+                    },
+                });
+            });
+        });
+    });
+
+     $(document).on("click", "button.view_proyecto", function () {
+        $("div.modal_proyecto").load($(this).data("href"), function () {
+            $(this).modal("show");
+        });
     });
 });

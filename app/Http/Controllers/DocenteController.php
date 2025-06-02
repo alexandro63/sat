@@ -214,7 +214,7 @@ class DocenteController extends Controller
         }
     }
 
-    public function getTeachersData(Request $request)
+    public function getDocentesData(Request $request)
     {
         $term = $request->input('term');
         $page = $request->input('page', 1);

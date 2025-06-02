@@ -22,8 +22,8 @@ class ProyectoController extends Controller
             return DataTables::of($proyectos)
                 ->addColumn('action', function ($row) {
                     $editUrl = route('proyectos.edit', $row->id);
-                    $revisionUrl = route('proyectos.revison', $row->id);
-                    $viewUrl = route('proyectos.view', $row->id);
+                    $revisionUrl = route('proyecto.revision', $row->id);
+                    $viewUrl = route('proyectos.show', $row->id);
                     $deleteUrl = route('proyectos.destroy', $row->id);
 
                     $canEdit = auth()->user()->can('proyecto.update');
@@ -42,17 +42,17 @@ class ProyectoController extends Controller
                     </button>
                     &nbsp;';
 
-                    $buttons = '
-                    <button data-href="' . $revisionUrl . '" class="btn btn-icon btn-sm btn-round btn-primary revision_proyecto"
-                    ' . $revisionDisabled . ' title="Revisión">
-                        <i class="icon-pencil"></i>
+                    $buttons .= '
+                    <button data-href="' . $revisionUrl . '" class="btn btn-icon btn-sm btn-round btn-success revision_proyecto"
+                    ' . $revisionDisabled . ' title="Revisión de Proyecto">
+                        <i class="fas fa-glasses"></i>
                     </button>
                     &nbsp;';
 
-                    $buttons = '
-                    <button data-href="' . $viewUrl . '" class="btn btn-icon btn-sm btn-round btn-primary view_proyecto"
-                    ' . $viewDisabled . ' title="Ver">
-                        <i class="icon-eye"></i>
+                    $buttons .= '
+                    <button data-href="' . $viewUrl . '" class="btn btn-icon btn-sm btn-round btn-dark view_proyecto"
+                    ' . $viewDisabled . ' title="Ver Registros">
+                        <i class="fas fa-address-card"></i>
                     </button>
                     &nbsp;';
 
@@ -66,10 +66,10 @@ class ProyectoController extends Controller
                 })
 
                 ->addColumn('docente_guia', function ($row) {
-                    return $row->docente->persona->apellidopat . ' ' . $row->docente->persona->apellidomat . ' ' . $row->docente->persona->nombres;
+                    return $row->docenteGuia->persona->apellidopat . ' ' . $row->docenteGuia->persona->apellidomat . ' ' . $row->docenteGuia->persona->nombres;
                 })
                 ->addColumn('docente_revisor', function ($row) {
-                    return $row->docente->persona->apellidopat . ' ' . $row->docente->persona->apellidomat . ' ' . $row->docente->persona->nombres;
+                    return $row->docenteRevisor->persona->apellidopat . ' ' . $row->docenteRevisor->persona->apellidomat . ' ' . $row->docenteRevisor->persona->nombres;
                 })
                 ->addColumn('estudiante', function ($row) {
                     return $row->estudiante->persona->apellidopat . ' ' . $row->estudiante->persona->apellidomat . ' ' . $row->estudiante->persona->nombres;
@@ -134,6 +134,11 @@ class ProyectoController extends Controller
         if (! auth()->user()->can('proyecto.view')) {
             abort(403, 'Unauthorized action.');
         }
+
+        if (request()->ajax()) {
+            $proyecto = Proyecto::find($id);
+            return view('proyectos/show', compact('proyecto'));
+        }
     }
 
     /**
@@ -141,12 +146,12 @@ class ProyectoController extends Controller
      */
     public function edit($id)
     {
-        if (! auth()->user()->can('estudiante.update')) {
+        if (! auth()->user()->can('proyecto.update')) {
             abort(403, 'Unauthorized action.');
         }
         if (request()->ajax()) {
-            $estudiante = Estudiante::find($id);
-            return view('estudiantes/edit', compact('estudiante'));
+            $proyecto = Proyecto::find($id);
+            return view('proyectos/edit', compact('proyecto'));
         }
     }
 
@@ -156,21 +161,22 @@ class ProyectoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (! auth()->user()->can('estudiante.update')) {
+        if (! auth()->user()->can('proyecto.update')) {
             abort(403, 'Unauthorized action.');
         }
 
         if (request()->ajax()) {
             try {
-                $input = $request->only(['per_id', 'id_programa_academico', 'numero_matricula', 'fecha_inscripcion']);
+                $input = $request->only(['id_docente_guia', 'id_docente_revisor', 'id_estudiante', 'titulo', 'linea_investigacion', 'area_conocimiento']);
 
-                $estudiante = Estudiante::findOrFail($id);
-                $estudiante->per_id = $input['per_id'];
-                $estudiante->id_programa_academico = $input['id_programa_academico'];
-                $estudiante->numero_matricula = $input['numero_matricula'];
-                $estudiante->fecha_inscripcion = $input['fecha_inscripcion'];
-                $estudiante->estado = $request->has('estado') ? 1 : 0;
-                $estudiante->save();
+                $proyecto = Proyecto::findOrFail($id);
+                $proyecto->id_docente_guia = $input['id_docente_guia'];
+                $proyecto->id_docente_revisor = $input['id_docente_revisor'];
+                $proyecto->id_estudiante = $input['id_estudiante'];
+                $proyecto->titulo = ucfirst(strtolower($input['titulo']));
+                $proyecto->linea_investigacion = ucfirst(strtolower($input['linea_investigacion']));
+                $proyecto->area_conocimiento = ucfirst(strtolower($input['area_conocimiento']));
+                $proyecto->save();
 
                 $output = [
                     'success' => true,
@@ -198,17 +204,67 @@ class ProyectoController extends Controller
      */
     public function destroy(string $id)
     {
-        if (! auth()->user()->can('estudiante.delete')) {
+        if (! auth()->user()->can('proyecto.delete')) {
             abort(403, 'Unauthorized action.');
         }
         if (request()->ajax()) {
             try {
-                $estudiante = Estudiante::findOrFail($id);
-                $estudiante->delete();
+                $proyecto = Proyecto::findOrFail($id);
+                $proyecto->delete();
 
                 $output = [
                     'success' => true,
                     'msg' => __('messages.deleted_success'),
+                ];
+            } catch (\Exception $e) {
+                Log::emergency(__('messages.error_log'), [
+                    'Archivo' => $e->getFile(),
+                    'Línea'   => $e->getLine(),
+                    'Mensaje' => $e->getMessage(),
+                ]);
+
+                $output = [
+                    'success' => false,
+                    'msg' => __('messages.something_went_wrong'),
+                ];
+            }
+
+            return $output;
+        }
+    }
+
+    public function revision($id)
+    {
+        if (! auth()->user()->can('proyecto.revision')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        if (request()->ajax()) {
+            $proyecto = Proyecto::find($id);
+            return view('proyectos/revision', compact('proyecto'));
+        }
+    }
+
+    public function revisionUpdate(Request $request, $id)
+    {
+        if (! auth()->user()->can('proyecto.revision')) {
+            abort(403, 'Unauthorized action.');
+        }
+        if (request()->ajax()) {
+            try {
+                $input = $request->only(['calificacion', 'fecha_entrega', 'fecha_defensa', 'resumen', 'observacion']);
+
+                $proyecto = Proyecto::findOrFail($id);
+                $proyecto->calificacion = $input['calificacion'];
+                $proyecto->fecha_entrega = $input['fecha_entrega'];
+                $proyecto->fecha_defensa = $input['fecha_defensa'];
+                $proyecto->resumen = $input['resumen'];
+                $proyecto->observacion = $input['observacion'];
+                $proyecto->save();
+
+                $output = [
+                    'success' => true,
+                    'msg' => __('messages.updated_success'),
                 ];
             } catch (\Exception $e) {
                 Log::emergency(__('messages.error_log'), [
