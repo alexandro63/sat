@@ -27,7 +27,7 @@
                             <label>Persona</label>
                             <select class="form-control" name="per_id" id="per_id">
                                 <option value="{{ $user->persona->id }}">{{ $user->persona->nombres }}
-                                    {{ $user->persona->apellidopat }} {{ $user->persona->apellidomat}}</option>
+                                    {{ $user->persona->apellidopat }} {{ $user->persona->apellidomat }}</option>
                             </select>
                         </div>
                     </div>
@@ -36,9 +36,8 @@
                             <label for="role">Permiso</label>
                             <select class="form-control" name="role" class="form-control">
                                 @foreach ($roles as $key => $role)
-                                    <option value="{{ $key }}" selected>
-                                        {{-- {{ $key ? 'selected' : '' }}> --}}
-                                        {{ $role }}
+                                    <option value="{{ $key }}" {{ $key === $user->roles->first()->id ? 'selected' : '' }}>
+                                      {{ $role}}
                                     </option>
                                 @endforeach
                             </select>

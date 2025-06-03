@@ -32,7 +32,7 @@ return [
             'icon'     => 'fas fa-file-signature',
             'children' => 'registros',
             'isActive' => 'registros.*',
-            'permission' => ['plantel_administrativo.index', 'docente.index','programa_academico.index','estudiantes.index','proyectos.index','metodologia.index','modulo.index','pago.index','taller.index','avance-estudiante.index'],
+            'permission' => ['plantel_administrativo.index', 'docente.index','programa_academico.index','estudiante.index','proyecto.index','metodologia.index','modulo.index','pago.index','taller.index','avance-estudiante.index'],
         ],
 
         [
@@ -109,13 +109,13 @@ return [
             [
                 'route' => 'estudiantes.index',
                 'title' => 'Estudiantes',
-                'permission' => 'estudiantes.index',
+                'permission' => 'estudiante.index',
             ],
 
             [
                 'route' => 'proyectos.index',
                 'title' => 'Proyectos',
-                'permission' => 'proyectos.index',
+                'permission' => 'proyecto.index',
             ],
 
             [
